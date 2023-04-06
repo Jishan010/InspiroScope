@@ -16,12 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.jishan.domain.entitiy.QuoteEntity
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
+fun HomeScreen() {
+    val homeViewModel = hiltViewModel<HomeViewModel>()
     val quote = homeViewModel.quote.collectAsState()
     val wallpaper = homeViewModel.wallpaper.collectAsState()
 

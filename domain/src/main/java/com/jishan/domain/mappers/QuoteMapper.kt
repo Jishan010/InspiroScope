@@ -6,11 +6,11 @@ import com.jishan.domain.entitiy.QuoteEntity
 object QuoteMapper {
     fun toEntity(quote: Quote): QuoteEntity {
         return QuoteEntity(
-            quote = quote.quote,
+            quote = quote.body,
             author = quote.author,
             tags = quote.tags,
-            category = quote.category,
-            id = quote.id
+            category = "", // The response does not include a category, so you can set it to an empty string or remove it from the QuoteEntity
+            id = quote.id.toString()
         )
     }
 }

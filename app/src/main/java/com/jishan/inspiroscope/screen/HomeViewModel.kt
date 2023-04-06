@@ -1,5 +1,6 @@
 package com.jishan.inspiroscope.screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jishan.domain.entitiy.QuoteEntity
@@ -31,28 +32,32 @@ class HomeViewModel @Inject constructor(
 
     fun loadRandomQuote() {
         viewModelScope.launch {
-            val result = getRandomQuoteUseCase()
+            val result = getRandomQuoteUseCase.invoke()
 
             result.onSuccess { quoteEntity ->
                 _quote.value = quoteEntity
+                Log.d("HomeViewModel", quoteEntity.toString())
             }
 
             result.onFailure { throwable ->
                 // Handle failure case, show error message or update the UI
+                Log.d("HomeViewModel", throwable.toString())
             }
         }
     }
 
     fun loadRandomWallpaper() {
         viewModelScope.launch {
-            val result = getRandomWallpaperUseCase()
+            val result = getRandomWallpaperUseCase.invoke()
 
             result.onSuccess { wallpaperEntity ->
                 _wallpaper.value = wallpaperEntity
+                Log.d("HomeViewModel", wallpaperEntity.toString())
             }
 
             result.onFailure { throwable ->
                 // Handle failure case, show error message or update the UI
+                Log.d("HomeViewModel", throwable.toString())
             }
         }
     }
