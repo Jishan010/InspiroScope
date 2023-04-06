@@ -4,13 +4,10 @@ import com.google.gson.Gson
 import com.jishan.data.models.ErrorResponse
 import com.jishan.data.models.Quote
 import com.jishan.data.models.QuoteResponse
-import com.jishan.data.network.QuotesApi
 import com.jishan.data.network.QuotesService
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
-
 
 class QuotesRemoteDataSource(private val quotesService: QuotesService) : QuotesDataSource {
 
@@ -42,4 +39,3 @@ class QuotesRemoteDataSource(private val quotesService: QuotesService) : QuotesD
         }
     }
 }
-

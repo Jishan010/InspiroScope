@@ -40,4 +40,3 @@ data class Wallpaper(
         photographer = wallpaperResponse.user.name
     )
 }
-
