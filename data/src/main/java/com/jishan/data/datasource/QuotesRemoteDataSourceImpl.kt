@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class QuotesRemoteDataSource(private val quotesService: QuotesService) : QuotesDataSource {
+class QuotesRemoteDataSourceImpl(private val quotesService: QuotesService) : QuotesDataSource {
 
     override suspend fun getRandomQuote(): Result<Quote> = withContext(Dispatchers.IO) {
         try {

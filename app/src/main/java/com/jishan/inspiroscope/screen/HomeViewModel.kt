@@ -6,11 +6,13 @@ import com.jishan.domain.entitiy.QuoteEntity
 import com.jishan.domain.entitiy.WallpaperEntity
 import com.jishan.domain.usecase.GetRandomQuoteUseCase
 import com.jishan.domain.usecase.GetRandomWallpaperUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getRandomQuoteUseCase: GetRandomQuoteUseCase,
     private val getRandomWallpaperUseCase: GetRandomWallpaperUseCase
