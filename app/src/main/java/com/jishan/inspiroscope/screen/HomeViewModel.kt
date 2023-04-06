@@ -1,16 +1,19 @@
 package com.jishan.inspiroscope.screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jishan.domain.entitiy.QuoteEntity
 import com.jishan.domain.entitiy.WallpaperEntity
 import com.jishan.domain.usecase.GetRandomQuoteUseCase
 import com.jishan.domain.usecase.GetRandomWallpaperUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getRandomQuoteUseCase: GetRandomQuoteUseCase,
     private val getRandomWallpaperUseCase: GetRandomWallpaperUseCase
@@ -29,28 +32,32 @@ class HomeViewModel @Inject constructor(
 
     fun loadRandomQuote() {
         viewModelScope.launch {
-            val result = getRandomQuoteUseCase()
+            val result = getRandomQuoteUseCase.invoke()
 
             result.onSuccess { quoteEntity ->
                 _quote.value = quoteEntity
+                Log.d("HomeViewModel", quoteEntity.toString())
             }
 
             result.onFailure { throwable ->
                 // Handle failure case, show error message or update the UI
+                Log.d("HomeViewModel", throwable.toString())
             }
         }
     }
 
     fun loadRandomWallpaper() {
         viewModelScope.launch {
-            val result = getRandomWallpaperUseCase()
+            val result = getRandomWallpaperUseCase.invoke()
 
             result.onSuccess { wallpaperEntity ->
                 _wallpaper.value = wallpaperEntity
+                Log.d("HomeViewModel", wallpaperEntity.toString())
             }
 
             result.onFailure { throwable ->
                 // Handle failure case, show error message or update the UI
+                Log.d("HomeViewModel", throwable.toString())
             }
         }
     }

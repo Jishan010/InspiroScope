@@ -9,13 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class QuotesRemoteDataSource(private val quotesService: QuotesService) : QuotesDataSource {
+class QuotesRemoteDataSourceImpl(private val quotesService: QuotesService) : QuotesDataSource {
 
     override suspend fun getRandomQuote(): Result<Quote> = withContext(Dispatchers.IO) {
         try {
             val response = quotesService.getRandomQuote()
             if (response.isSuccessful) {
-                val quote = response.body()?.contents?.quotes?.firstOrNull()
+                val quote = response.body()?.quote
                 if (quote != null) {
                     Result.success(quote)
                 } else {

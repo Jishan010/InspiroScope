@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class WallpapersRemoteDataSource(private val wallpapersService: WallpapersService) :
+class WallpapersRemoteDataSourceImpl(private val wallpapersService: WallpapersService) :
     WallpaperDataSource {
 
     override suspend fun getRandomWallpaper(): Result<Wallpaper> = withContext(Dispatchers.IO) {
