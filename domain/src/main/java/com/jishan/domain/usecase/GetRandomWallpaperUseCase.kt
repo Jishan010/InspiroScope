@@ -6,7 +6,7 @@ import com.jishan.domain.mappers.WallpaperMapper
 import com.jishan.domain.mappers.WallpaperMapper.toEntity
 
 class GetRandomWallpaperUseCase(private val wallpapersRepository: WallpapersRepository) {
-    suspend fun execute(): Result<WallpaperEntity> {
+    suspend operator fun invoke(): Result<WallpaperEntity> {
         val result = wallpapersRepository.getRandomWallpaper()
         return result.map(WallpaperMapper::toEntity)
     }
