@@ -28,3 +28,16 @@ data class User(
     val username: String,
     val name: String
 )
+
+data class Wallpaper(
+    val id: String,
+    val url: String,
+    val photographer: String
+) {
+    constructor(wallpaperResponse: WallpaperResponse) : this(
+        id = wallpaperResponse.id,
+        url = wallpaperResponse.urls.regular,
+        photographer = wallpaperResponse.user.name
+    )
+}
+
