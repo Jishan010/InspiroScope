@@ -1,6 +1,5 @@
 package com.jishan.inspiroscope.screen
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,40 +19,23 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.jishan.domain.entitiy.QuoteEntity
-import androidx.compose.foundation.pager.VerticalPager
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen() {
     val homeViewModel = hiltViewModel<HomeViewModel>()
+    val quote = homeViewModel.quote.collectAsState()
+    val wallpaper = homeViewModel.wallpaper.collectAsState()
 
-    // Number of pages you want to load
-    val count = 10
-
-    VerticalPager(
-        pageCount = count,
-        modifier = Modifier.fillMaxSize()
-    ) { pageIndex ->
-        val quote = homeViewModel.quote.collectAsState()
-        val wallpaper = homeViewModel.wallpaper.collectAsState()
-
-        if (pageIndex == count - 1) {
-            // Load a new quote and wallpaper when the last page is visible
-            homeViewModel.loadRandomQuote()
-            homeViewModel.loadRandomWallpaper()
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        wallpaper.value?.url?.let { url ->
+            Image(
+                painter = rememberAsyncImagePainter(url),
+                contentDescription = "Wallpaper",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
         }
-
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            wallpaper.value?.url?.let { url ->
-                Image(
-                    painter = rememberAsyncImagePainter(url),
-                    contentDescription = "Wallpaper",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-            }
-            quote.value?.let { QuoteCard(it) }
-        }
+        quote.value?.let { QuoteCard(it) }
     }
 }
 
