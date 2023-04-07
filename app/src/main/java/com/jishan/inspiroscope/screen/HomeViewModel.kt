@@ -1,6 +1,5 @@
 package com.jishan.inspiroscope.screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jishan.domain.entitiy.QuoteEntity
@@ -19,55 +18,37 @@ class HomeViewModel @Inject constructor(
     private val getRandomWallpaperUseCase: GetRandomWallpaperUseCase
 ) : ViewModel() {
 
-    private val _quote = MutableStateFlow<QuoteEntity?>(null)
-    val quote: StateFlow<QuoteEntity?> = _quote
+    private val _data = MutableStateFlow<List<DataItem>>(emptyList())
+    val data: StateFlow<List<DataItem>> = _data
 
-    private val _wallpaper = MutableStateFlow<WallpaperEntity?>(null)
-    val wallpaper: StateFlow<WallpaperEntity?> = _wallpaper
+    private var isLoading = false
+    private var nextPageToLoad = 0
 
     init {
-        loadRandomQuote()
-        loadRandomWallpaper()
+        loadNextData(0)
     }
 
-    fun loadRandomQuote() {
-        viewModelScope.launch {
-            val result = getRandomQuoteUseCase.invoke()
+    fun loadNextData(currentPage: Int) {
+        if (isLoading) return
+        if (currentPage >= nextPageToLoad - 1) {
+            viewModelScope.launch {
+                isLoading = true
 
-            result.onSuccess { quoteEntity ->
-                _quote.value = quoteEntity
-                Log.d("HomeViewModel", quoteEntity.toString())
-            }
+                val quoteResult = getRandomQuoteUseCase.invoke()
+                val wallpaperResult = getRandomWallpaperUseCase.invoke()
 
-            result.onFailure { throwable ->
-                // Handle failure case, show error message or update the UI
-                Log.d("HomeViewModel", throwable.toString())
-            }
-        }
-    }
+                quoteResult.onSuccess { quoteEntity ->
+                    wallpaperResult.onSuccess { wallpaperEntity ->
+                        val newDataItem = DataItem(quoteEntity, wallpaperEntity)
+                        _data.value = _data.value + newDataItem
 
-    fun loadRandomWallpaper() {
-        viewModelScope.launch {
-            val result = getRandomWallpaperUseCase.invoke()
-
-            result.onSuccess { wallpaperEntity ->
-                _wallpaper.value = wallpaperEntity
-                Log.d("HomeViewModel", wallpaperEntity.toString())
-            }
-
-            result.onFailure { throwable ->
-                // Handle failure case, show error message or update the UI
-                Log.d("HomeViewModel", throwable.toString())
+                        nextPageToLoad++
+                        isLoading = false
+                    }
+                }
             }
         }
     }
 
-    private var currentPosition = 0
-    fun loadNextData(position: Int) {
-        if (position > currentPosition) {
-            currentPosition = position
-            loadRandomQuote()
-            loadRandomWallpaper()
-        }
-    }
+    data class DataItem(val quote: QuoteEntity, val wallpaper: WallpaperEntity)
 }

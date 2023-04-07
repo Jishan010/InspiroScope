@@ -27,27 +27,29 @@ import com.jishan.domain.entitiy.QuoteEntity
 @Composable
 fun HomeScreen() {
     val homeViewModel = hiltViewModel<HomeViewModel>()
-    val quote = homeViewModel.quote.collectAsState()
-    val wallpaper = homeViewModel.wallpaper.collectAsState()
+    val data = homeViewModel.data.collectAsState()
 
-    val listState = rememberPagerState()
+    val pagerState = rememberPagerState()
 
     VerticalPager(
         pageCount = Int.MAX_VALUE, // Infinite pages
-        state = listState,
+        state = pagerState,
         modifier = Modifier.fillMaxSize()
     ) { page ->
         homeViewModel.loadNextData(page)
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            wallpaper.value?.url?.let { url ->
+        val dataItem = data.value.getOrNull(page)
+        if (dataItem != null) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Image(
-                    painter = rememberAsyncImagePainter(url),
+                    painter = rememberAsyncImagePainter(dataItem.wallpaper.url),
                     contentDescription = "Wallpaper",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
+                QuoteCard(dataItem.quote)
             }
-            quote.value?.let { QuoteCard(it) }
+        } else {
+            // Show an empty screen or a loading indicator if the data is not available
         }
     }
 }
