@@ -61,4 +61,13 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    private var currentPosition = 0
+    fun loadNextData(position: Int) {
+        if (position > currentPosition) {
+            currentPosition = position
+            loadRandomQuote()
+            loadRandomWallpaper()
+        }
+    }
 }
