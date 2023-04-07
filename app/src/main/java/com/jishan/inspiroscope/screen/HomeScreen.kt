@@ -2,10 +2,7 @@ package com.jishan.inspiroscope.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -35,14 +32,7 @@ fun HomeScreen() {
                 contentScale = ContentScale.Crop
             )
         }
-
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            item {
-                quote.value?.let { quoteEntity ->
-                    QuoteCard(quoteEntity)
-                }
-            }
-        }
+        quote.value?.let { QuoteCard(it) }
     }
 }
 
@@ -53,7 +43,8 @@ fun QuoteCard(quoteEntity: QuoteEntity) {
             .fillMaxSize()
             .background(color = Color.Black.copy(alpha = 0.3f))
             .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Text(
             text = quoteEntity.quote,
