@@ -23,7 +23,7 @@ fun HomeScreen() {
     val quote = homeViewModel.quote.collectAsState()
     val wallpaper = homeViewModel.wallpaper.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         wallpaper.value?.url?.let { url ->
             Image(
                 painter = rememberAsyncImagePainter(url),
@@ -40,7 +40,6 @@ fun HomeScreen() {
 fun QuoteCard(quoteEntity: QuoteEntity) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
             .background(color = Color.Black.copy(alpha = 0.3f))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
