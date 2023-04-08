@@ -24,7 +24,7 @@ The app is built using the following technologies:
 
 ## Screenshots
 
-![](screnshots/home.jpg<img src="screnshots/home.jpg" width="500">)
+<img src="screnshots/home.jpg" width="320">
 
 ## Getting Started
 Clone the repository and open the project in Android Studio. Make sure you have the latest Android SDK and build tools installed.
