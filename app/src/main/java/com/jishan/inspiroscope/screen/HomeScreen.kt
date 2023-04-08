@@ -23,8 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.jishan.domain.entitiy.QuoteEntity
 
-
-//todo featureese below
+// todo featureese below
 /**
  * Favorites and history:
 Allow users to save their favorite quotes and wallpapers for easy access. Maintain a history of viewed items, so users can quickly find previously viewed content.
