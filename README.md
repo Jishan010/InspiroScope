@@ -24,7 +24,7 @@ The app is built using the following technologies:
 
 ## Screenshots
 
-[](../Desktop/2023-04-08 11.51.54.jpg)
+![](screnshots/home.jpg)
 
 ## Getting Started
 Clone the repository and open the project in Android Studio. Make sure you have the latest Android SDK and build tools installed.
