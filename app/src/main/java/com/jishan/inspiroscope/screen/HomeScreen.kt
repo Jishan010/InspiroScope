@@ -23,6 +23,43 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.jishan.domain.entitiy.QuoteEntity
 
+// todo featureese below
+/**
+ * Favorites and history:
+Allow users to save their favorite quotes and wallpapers for easy access. Maintain a history of viewed items, so users can quickly find previously viewed content.
+
+Search functionality:
+Implement a search feature that allows users to search for specific quotes or authors.
+
+Categories and tags:
+Organize quotes and wallpapers into categories and tags, making it easier for users to find content related to specific topics, themes, or emotions.
+
+Daily quote notifications:
+Send daily notifications to users with a new quote or wallpaper, encouraging regular engagement with the app.
+
+Quote and wallpaper customization:
+Allow users to customize the appearance of quotes (font style, size, and color) and wallpapers (brightness, contrast, and filters). Users could also have the option to use their own images as wallpapers.
+
+Sharing features:
+Enable users to share their favorite quotes and wallpapers with friends and family on social media platforms.
+
+User accounts and sync:
+Implement user accounts and cloud sync, allowing users to access their favorites and settings across multiple devices.
+
+Dark mode and themes:
+Add a dark mode option and allow users to choose from a selection of themes to personalize the app's appearance.
+
+Widgets:
+Create home screen widgets that display a new quote or wallpaper each day or allow users to display their favorite quotes on their device's home screen.
+
+In-app purchases and premium content:
+Offer premium content or features, such as ad-free experience, exclusive quotes or wallpapers, or additional customization options through in-app purchases.
+
+These features can help improve the user experience and make your app more appealing to a wider audience. Remember to prioritize features based on user needs and preferences, and consider user feedback when refining the app.
+Regenerate response
+ *
+ */
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen() {
@@ -57,7 +94,9 @@ fun HomeScreen() {
 @Composable
 fun QuoteCard(quoteEntity: QuoteEntity) {
     Column(
-        modifier = Modifier.background(color = Color.Black.copy(alpha = 0.3f)).padding(16.dp),
+        modifier = Modifier
+            .background(color = Color.Black.copy(alpha = 0.3f))
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
