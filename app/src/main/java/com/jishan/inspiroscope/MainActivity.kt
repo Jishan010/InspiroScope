@@ -55,7 +55,6 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun scheduleDailyQuoteWorker() {
-        // fixme : update the time back to 24 TimeUnit.Hous
         val workRequest = PeriodicWorkRequestBuilder<DailyQuoteWorker>(24, TimeUnit.HOURS)
             .build()
 
