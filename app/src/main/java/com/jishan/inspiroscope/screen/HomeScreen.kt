@@ -35,7 +35,7 @@ Categories and tags:
 Organize quotes and wallpapers into categories and tags, making it easier for users to find content related to specific topics, themes, or emotions.
 
 Daily quote notifications:
-Send daily notifications to users with a new quote or wallpaper, encouraging regular engagement with the app.
+Send daily notifications to users with a new quote or wallpaper, encouraging regular engagement with the app. - done
 
 Quote and wallpaper customization:
 Allow users to customize the appearance of quotes (font style, size, and color) and wallpapers (brightness, contrast, and filters). Users could also have the option to use their own images as wallpapers.

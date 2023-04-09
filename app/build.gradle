@@ -4,6 +4,7 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'jacoco'
 }
 
 android {
@@ -47,6 +48,16 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
         exclude 'META-INF/versions/9/previous-compilation-data.bin'
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
     }
 }
 
