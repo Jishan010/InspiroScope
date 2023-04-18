@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jishan.inspiroscope.R
 
+
 @Composable
 fun ThemeScreen(
     wallpapers: List<Wallpaper>,
@@ -124,6 +125,15 @@ fun ThemeScreen(
                                 .clickable {
                                     onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
                                 }) {
+                                Image(
+                                    painter = painterResource(wallpaper.imageResId),
+                                    contentDescription = "Wallpaper Thumbnail",
+                                    modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .height(350.dp)
+                                        .width(190.dp),
+                                    contentScale = ContentScale.FillBounds
+                                )
                                 Text(
                                     wallpaper.title,
                                     modifier = Modifier.align(Alignment.Center),
@@ -174,8 +184,13 @@ fun ThemeScreen(
 
 @Composable
 fun <T> HorizontalList(title: String, items: List<T>, itemContent: @Composable (T) -> Unit) {
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(title, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+    Column {
+        Text(
+            title,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+        )
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyRow(
@@ -184,7 +199,9 @@ fun <T> HorizontalList(title: String, items: List<T>, itemContent: @Composable (
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             items(items) { item ->
-                itemContent(item)
+                Box(modifier = Modifier.padding(horizontal = 8.dp)) {
+                    itemContent(item)
+                }
             }
         }
     }
