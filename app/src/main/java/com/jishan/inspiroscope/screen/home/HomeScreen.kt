@@ -1,4 +1,4 @@
-package com.jishan.inspiroscope.screen
+package com.jishan.inspiroscope.screen.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image

@@ -13,10 +13,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.jishan.inspiroscope.screen.HomeScreen
+import com.jishan.inspiroscope.screen.home.HomeScreen
+import com.jishan.inspiroscope.screen.theme.Font
+import com.jishan.inspiroscope.screen.theme.Sound
+import com.jishan.inspiroscope.screen.theme.ThemeScreen
+import com.jishan.inspiroscope.screen.theme.Wallpaper
 import com.jishan.inspiroscope.ui.theme.InspiroScopeTheme
 import com.jishan.inspiroscope.work.DailyQuoteWorker
 import com.jishan.inspiroscope.work.DailyQuoteWorker.Companion.CHANNEL_ID
@@ -34,7 +40,37 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    HomeScreen()
+                    //HomeScreen()
+                    val wallpapers = listOf(
+                        Wallpaper("Wallpaper 1", Color.Red),
+                        Wallpaper("Wallpaper 2", Color.Green),
+                        Wallpaper("Wallpaper 3", Color.Blue),
+                        Wallpaper("Wallpaper 1", Color.Red),
+                        Wallpaper("Wallpaper 2", Color.Green),
+                        Wallpaper("Wallpaper 3", Color.Blue)
+                    )
+
+                    val fonts = listOf(
+                        Font("Font 1", FontFamily.Serif),
+                        Font("Font 2", FontFamily.SansSerif),
+                        Font("Font 3", FontFamily.Monospace)
+                    )
+
+                    val sounds = listOf(
+                        Sound("Sound 1", null),
+                        Sound("Sound 2", null),
+                        Sound("Sound 3", null)
+                    )
+
+                    ThemeScreen(
+                        wallpapers = wallpapers,
+                        fonts = fonts,
+                        sounds = sounds,
+                        onWallpaperSelected = { wallpaper -> },
+                        onFontSelected = { font -> },
+                        onSoundSelected = { sound -> },
+                        onUpgradeToPremium = { }
+                    )
                 }
             }
         }
