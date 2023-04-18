@@ -41,12 +41,14 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // HomeScreen()
                     val wallpapers = listOf(
-                        Wallpaper("Wallpaper 1", Color.Red),
-                        Wallpaper("Wallpaper 2", Color.Green),
-                        Wallpaper("Wallpaper 3", Color.Blue),
-                        Wallpaper("Wallpaper 1", Color.Red),
-                        Wallpaper("Wallpaper 2", Color.Green),
-                        Wallpaper("Wallpaper 3", Color.Blue)
+                        Wallpaper("Wallpaper 1", Color.Red, R.drawable.first_wallpaper),
+                        Wallpaper("Wallpaper 2", Color.Green, R.drawable.second_wallpaper),
+                        Wallpaper("Wallpaper 3", Color.Blue, R.drawable.third_wallpaper),
+                        Wallpaper("Wallpaper 4", Color.Red, R.drawable.fourth_wallpaper),
+                        Wallpaper("Wallpaper 6", Color.Blue, R.drawable.sixth_wallpaper),
+                        Wallpaper("Wallpaper 7", Color.Red, R.drawable.seventh_wallpaper),
+                        Wallpaper("Wallpaper 8", Color.Green, R.drawable.eighth_wallaper),
+                        Wallpaper("Wallpaper 9", Color.Blue, R.drawable.ninth_wallpaper)
                     )
 
                     val fonts = listOf(
