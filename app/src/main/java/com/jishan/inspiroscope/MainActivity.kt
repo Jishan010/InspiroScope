@@ -18,7 +18,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.jishan.inspiroscope.screen.home.HomeScreen
 import com.jishan.inspiroscope.screen.theme.Font
 import com.jishan.inspiroscope.screen.theme.Sound
 import com.jishan.inspiroscope.screen.theme.ThemeScreen
@@ -40,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    //HomeScreen()
+                    // HomeScreen()
                     val wallpapers = listOf(
                         Wallpaper("Wallpaper 1", Color.Red),
                         Wallpaper("Wallpaper 2", Color.Green),
@@ -51,6 +50,9 @@ class MainActivity : ComponentActivity() {
                     )
 
                     val fonts = listOf(
+                        Font("Font 1", FontFamily.Serif),
+                        Font("Font 2", FontFamily.SansSerif),
+                        Font("Font 3", FontFamily.Monospace),
                         Font("Font 1", FontFamily.Serif),
                         Font("Font 2", FontFamily.SansSerif),
                         Font("Font 3", FontFamily.Monospace)
