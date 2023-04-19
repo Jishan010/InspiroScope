@@ -1,7 +1,9 @@
 package com.jishan.inspiroscope.ui.screen.theme
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -32,14 +36,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jishan.inspiroscope.R
+import com.jishan.inspiroscope.ui.theme.BreeSerifRegular
+import com.jishan.inspiroscope.ui.theme.DeliciousHandrawn
+import com.jishan.inspiroscope.ui.theme.DynaPuff
+import com.jishan.inspiroscope.ui.theme.IndieFlower
+import com.jishan.inspiroscope.ui.theme.MarkScriptRegular
+import com.jishan.inspiroscope.ui.theme.VtThreeThreeThreeRegular
 import com.jishan.inspiroscope.utils.GlideBlurImage
 
 @Composable
@@ -60,8 +72,17 @@ fun ThemeScreen(
         selectedWallpaper.value = wallpaper
         onWallpaperSelected(wallpaper)
     }
+
+    // Remember the selected font
+    val selectedFont = remember { mutableStateOf(fonts.first()) }
+
+    // Update the selected font when the user taps on a font
+    val onFontTapped: (Font) -> Unit = { font ->
+        selectedFont.value = font
+        onFontSelected(font)
+    }
+
     // Set the background image to the selected wallpaper
-// Set the background image to the selected wallpaper
     Box(modifier = Modifier.fillMaxSize()) {
         GlideBlurImage(
             resourceId = selectedWallpaper.value.imageResId,
@@ -89,22 +110,38 @@ fun ThemeScreen(
                         elevation = 8.dp,
                         backgroundColor = Color.LightGray
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                "Upgrade to Premium",
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold
+                        Box {
+                            Image(
+                                painter = painterResource(R.drawable.upgrade_to_premium_background),
+                                contentDescription = "Wallpaper Thumbnail",
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .height(80.dp)
+                                    .wrapContentSize(),
+                                contentScale = ContentScale.Crop
                             )
-                            Icon(
-                                Icons.Default.ArrowForward,
-                                contentDescription = "Upgrade to Premium"
-                            )
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(80.dp)
+                                    .padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                Text(
+                                    text = "Go Premium",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Image(
+                                    painter = painterResource(R.drawable.baseline_chevron_right_24),
+                                    contentDescription = "Wallpaper Thumbnail",
+                                    modifier = Modifier
+                                        .wrapContentSize(),
+                                    contentScale = ContentScale.Fit
+                                )
+                            }
                         }
                     }
                 }
@@ -120,13 +157,9 @@ fun ThemeScreen(
                             shape = RoundedCornerShape(12.dp),
                             elevation = 4.dp
                         ) {
-                            Box(
-                                modifier = Modifier
-                                    .background(wallpaper.color)
-                                    .clickable {
-                                        onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
-                                    }
-                            ) {
+                            Box(modifier = Modifier.clickable {
+                                onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
+                            }) {
                                 Image(
                                     painter = painterResource(wallpaper.imageResId),
                                     contentDescription = "Wallpaper Thumbnail",
@@ -140,8 +173,21 @@ fun ThemeScreen(
                                     wallpaper.title,
                                     modifier = Modifier.align(Alignment.Center),
                                     fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = selectedFont.value.fontFamily // Update fontFamily with the selected font
                                 )
+                                // Add a border around the selected wallpaper
+                                if (wallpaper == selectedWallpaper.value) {
+                                    Border(
+                                        modifier = Modifier
+                                            .height(350.dp)
+                                            .width(190.dp)
+                                            .align(Alignment.Center),
+                                        color = Color.White,
+                                        width = 2.dp,
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                }
                             }
                         }
                     }
@@ -149,12 +195,28 @@ fun ThemeScreen(
                 // Fonts
                 item {
                     HorizontalList(title = "Fonts", items = fonts) { font ->
-                        Text(
-                            font.title,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp),
-                            fontFamily = font.fontFamily,
-                            fontSize = 16.sp
-                        )
+                        Box(
+                            modifier = Modifier.then(
+                                if (font.fontFamily == selectedFont.value.fontFamily) {
+                                    Modifier
+                                        .wrapContentSize()
+                                        .border(
+                                            width = 2.dp,
+                                            color = Color.White,
+                                            shape = RoundedCornerShape(5.dp)
+                                        )
+                                } else Modifier
+                            )
+                        ) {
+                            Text(
+                                font.title,
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp, vertical = 8.dp)
+                                    .clickable { onFontTapped(font) }, // Invoke onFontTapped when font is clicked
+                                fontFamily = font.fontFamily,
+                                fontSize = 16.sp
+                            )
+                        }
                     }
                 }
 
@@ -184,6 +246,12 @@ fun ThemeScreen(
 }
 
 @Composable
+fun Border(modifier: Modifier, color: Color, width: Dp, shape: Shape) {
+    val borderModifier = modifier.border(width, color, shape)
+    Box(modifier = borderModifier)
+}
+
+@Composable
 fun <T> HorizontalList(title: String, items: List<T>, itemContent: @Composable (T) -> Unit) {
     Column {
         Text(
@@ -210,12 +278,11 @@ fun <T> HorizontalList(title: String, items: List<T>, itemContent: @Composable (
 
 // Replace these classes with your actual data models
 data class Wallpaper(
-    val title: String,
-    val color: Color,
-    val imageResId: Int = R.drawable.first_wallpaper
+    val title: String, val color: Color, val imageResId: Int = R.drawable.first_wallpaper
 )
 
 data class Font(val title: String, val fontFamily: FontFamily)
+
 data class Sound(val title: String, val imageResId: Int?)
 
 // Usage example
@@ -233,24 +300,23 @@ fun ThemeScreenPreview() {
     )
 
     val fonts = listOf(
-        Font("Font 1", FontFamily.Serif),
-        Font("Font 2", FontFamily.SansSerif),
-        Font("Font 3", FontFamily.Monospace)
+        Font("Dyna Puff", DynaPuff),
+        Font("Bree Serif", BreeSerifRegular),
+        Font("Delicious Handrawn", DeliciousHandrawn),
+        Font("Indie Flower", IndieFlower),
+        Font("Mark Script", MarkScriptRegular),
+        Font("Vt333", VtThreeThreeThreeRegular)
     )
 
     val sounds = listOf(
-        Sound("Sound 1", null),
-        Sound("Sound 2", null),
-        Sound("Sound 3", null)
+        Sound("Sound 1", null), Sound("Sound 2", null), Sound("Sound 3", null)
     )
 
-    ThemeScreen(
-        wallpapers = wallpapers,
+    ThemeScreen(wallpapers = wallpapers,
         fonts = fonts,
         sounds = sounds,
         onWallpaperSelected = { wallpaper -> },
         onFontSelected = { font -> },
         onSoundSelected = { sound -> },
-        onUpgradeToPremium = { }
-    )
+        onUpgradeToPremium = { })
 }
