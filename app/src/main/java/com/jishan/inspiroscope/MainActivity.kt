@@ -18,10 +18,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.jishan.inspiroscope.screen.theme.Font
-import com.jishan.inspiroscope.screen.theme.Sound
-import com.jishan.inspiroscope.screen.theme.ThemeScreen
-import com.jishan.inspiroscope.screen.theme.Wallpaper
+import com.jishan.inspiroscope.ui.screen.theme.Font
+import com.jishan.inspiroscope.ui.screen.theme.Sound
+import com.jishan.inspiroscope.ui.screen.theme.ThemeScreen
+import com.jishan.inspiroscope.ui.screen.theme.Wallpaper
 import com.jishan.inspiroscope.ui.theme.InspiroScopeTheme
 import com.jishan.inspiroscope.work.DailyQuoteWorker
 import com.jishan.inspiroscope.work.DailyQuoteWorker.Companion.CHANNEL_ID
@@ -43,7 +43,6 @@ class MainActivity : ComponentActivity() {
                     val wallpapers = listOf(
                         Wallpaper("Wallpaper 1", Color.Red, R.drawable.first_wallpaper),
                         Wallpaper("Wallpaper 2", Color.Green, R.drawable.second_wallpaper),
-                        Wallpaper("Wallpaper 3", Color.Blue, R.drawable.third_wallpaper),
                         Wallpaper("Wallpaper 4", Color.Red, R.drawable.fourth_wallpaper),
                         Wallpaper("Wallpaper 6", Color.Blue, R.drawable.sixth_wallpaper),
                         Wallpaper("Wallpaper 7", Color.Red, R.drawable.seventh_wallpaper),

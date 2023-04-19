@@ -1,4 +1,4 @@
-package com.jishan.inspiroscope.screen.theme
+package com.jishan.inspiroscope.ui.screen.theme
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,7 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -41,7 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jishan.inspiroscope.R
-
+import com.jishan.inspiroscope.utils.GlideBlurImage
 
 @Composable
 fun ThemeScreen(
@@ -64,11 +63,10 @@ fun ThemeScreen(
     // Set the background image to the selected wallpaper
 // Set the background image to the selected wallpaper
     Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(selectedWallpaper.value.imageResId),
-            contentDescription = "Background",
+        GlideBlurImage(
+            resourceId = selectedWallpaper.value.imageResId,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
+            blurRadius = 10 // Change the value of the blur radius
         )
 
         // Add a header with the title "Themes"
@@ -99,7 +97,9 @@ fun ThemeScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                "Upgrade to Premium", fontSize = 18.sp, fontWeight = FontWeight.Bold
+                                "Upgrade to Premium",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold
                             )
                             Icon(
                                 Icons.Default.ArrowForward,
@@ -120,11 +120,13 @@ fun ThemeScreen(
                             shape = RoundedCornerShape(12.dp),
                             elevation = 4.dp
                         ) {
-                            Box(modifier = Modifier
-                                .background(wallpaper.color)
-                                .clickable {
-                                    onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
-                                }) {
+                            Box(
+                                modifier = Modifier
+                                    .background(wallpaper.color)
+                                    .clickable {
+                                        onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
+                                    }
+                            ) {
                                 Image(
                                     painter = painterResource(wallpaper.imageResId),
                                     contentDescription = "Wallpaper Thumbnail",
@@ -179,7 +181,6 @@ fun ThemeScreen(
             }
         }
     }
-
 }
 
 @Composable
@@ -209,7 +210,9 @@ fun <T> HorizontalList(title: String, items: List<T>, itemContent: @Composable (
 
 // Replace these classes with your actual data models
 data class Wallpaper(
-    val title: String, val color: Color, val imageResId: Int = R.drawable.first_wallpaper
+    val title: String,
+    val color: Color,
+    val imageResId: Int = R.drawable.first_wallpaper
 )
 
 data class Font(val title: String, val fontFamily: FontFamily)
@@ -222,7 +225,6 @@ fun ThemeScreenPreview() {
     val wallpapers = listOf(
         Wallpaper("Wallpaper 1", Color.Red, R.drawable.first_wallpaper),
         Wallpaper("Wallpaper 2", Color.Green, R.drawable.second_wallpaper),
-        Wallpaper("Wallpaper 3", Color.Blue, R.drawable.third_wallpaper),
         Wallpaper("Wallpaper 1", Color.Red, R.drawable.fourth_wallpaper),
         Wallpaper("Wallpaper 3", Color.Blue, R.drawable.sixth_wallpaper),
         Wallpaper("Wallpaper 1", Color.Red, R.drawable.seventh_wallpaper),
@@ -237,14 +239,18 @@ fun ThemeScreenPreview() {
     )
 
     val sounds = listOf(
-        Sound("Sound 1", null), Sound("Sound 2", null), Sound("Sound 3", null)
+        Sound("Sound 1", null),
+        Sound("Sound 2", null),
+        Sound("Sound 3", null)
     )
 
-    ThemeScreen(wallpapers = wallpapers,
+    ThemeScreen(
+        wallpapers = wallpapers,
         fonts = fonts,
         sounds = sounds,
         onWallpaperSelected = { wallpaper -> },
         onFontSelected = { font -> },
         onSoundSelected = { sound -> },
-        onUpgradeToPremium = { })
+        onUpgradeToPremium = { }
+    )
 }
