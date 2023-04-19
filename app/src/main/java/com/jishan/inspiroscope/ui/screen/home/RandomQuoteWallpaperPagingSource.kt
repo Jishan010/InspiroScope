@@ -1,4 +1,4 @@
-package com.jishan.inspiroscope.screen
+package com.jishan.inspiroscope.ui.screen.home
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
