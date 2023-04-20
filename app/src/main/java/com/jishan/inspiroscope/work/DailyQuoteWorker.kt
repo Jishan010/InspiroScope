@@ -1,5 +1,6 @@
 package com.jishan.inspiroscope.work
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -32,6 +33,7 @@ class DailyQuoteWorker @AssistedInject constructor(
         Result.success()
     }
 
+    @SuppressLint("MissingPermission")
     private fun sendQuoteNotification(quote: QuoteEntity) {
         // Create a notification with the quote content
         val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)

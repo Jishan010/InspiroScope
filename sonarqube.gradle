@@ -1,0 +1,21 @@
+apply plugin: "org.sonarqube"
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "inspiroscope"
+        property "sonar.projectKey", "inspiroscope_key"
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", ["src/test/java"]
+        property "sonar.test.inclusions", "**/*Test*/**"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.tests", ["src/test/java", "../domain/src/test/java", "../data/src/test/java", "../core/src/test/java"]
+        property "sonar.test.inclusions", "**/*Test*/**, **/*Spec*/**"
+        property "sonar.coverage.jacoco.xmlReportPaths", ["${project.rootDir}/app/build/reports/jacoco/jacocoTestDebugUnitTestReport/jacocoTestDebugUnitTestReport.xml", "${project.rootDir}/domain/build/reports/jacoco/jacocoTestDebugUnitTestReport/jacocoTestDebugUnitTestReport.xml", "${project.rootDir}/data/build/reports/jacoco/jacocoTestDebugUnitTestReport/jacocoTestDebugUnitTestReport.xml", "${project.rootDir}/core/build/reports/jacoco/jacocoTestDebugUnitTestReport/jacocoTestDebugUnitTestReport.xml"]
+        property "sonar.jacoco.reportPaths", ["${project.rootDir}/app/build/jacoco/testDebugUnitTest.exec", "${project.rootDir}/domain/build/jacoco/testDebugUnitTest.exec", "${project.rootDir}/data/build/jacoco/testDebugUnitTest.exec", "${project.rootDir}/core/build/jacoco/testDebugUnitTest.exec"]
+        property "sonar.exclusions", '**/*Test*/**,' +
+                '*.json,' +
+                '**/*test*/**,' +
+                '**/.gradle/**,' +
+                '**/R.class'
+    }
+}

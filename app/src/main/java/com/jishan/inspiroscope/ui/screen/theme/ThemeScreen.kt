@@ -1,8 +1,6 @@
 package com.jishan.inspiroscope.ui.screen.theme
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -25,10 +22,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -157,9 +151,11 @@ fun ThemeScreen(
                             shape = RoundedCornerShape(12.dp),
                             elevation = 4.dp
                         ) {
-                            Box(modifier = Modifier.clickable {
-                                onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
-                            }) {
+                            Box(
+                                modifier = Modifier.clickable {
+                                    onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
+                                }
+                            ) {
                                 Image(
                                     painter = painterResource(wallpaper.imageResId),
                                     contentDescription = "Wallpaper Thumbnail",
@@ -278,7 +274,9 @@ fun <T> HorizontalList(title: String, items: List<T>, itemContent: @Composable (
 
 // Replace these classes with your actual data models
 data class Wallpaper(
-    val title: String, val color: Color, val imageResId: Int = R.drawable.first_wallpaper
+    val title: String,
+    val color: Color,
+    val imageResId: Int = R.drawable.first_wallpaper
 )
 
 data class Font(val title: String, val fontFamily: FontFamily)
@@ -309,14 +307,18 @@ fun ThemeScreenPreview() {
     )
 
     val sounds = listOf(
-        Sound("Sound 1", null), Sound("Sound 2", null), Sound("Sound 3", null)
+        Sound("Sound 1", null),
+        Sound("Sound 2", null),
+        Sound("Sound 3", null)
     )
 
-    ThemeScreen(wallpapers = wallpapers,
+    ThemeScreen(
+        wallpapers = wallpapers,
         fonts = fonts,
         sounds = sounds,
         onWallpaperSelected = { wallpaper -> },
         onFontSelected = { font -> },
         onSoundSelected = { sound -> },
-        onUpgradeToPremium = { })
+        onUpgradeToPremium = { }
+    )
 }
