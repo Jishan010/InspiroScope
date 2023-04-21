@@ -11,11 +11,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.rememberNavController
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.jishan.inspiroscope.ui.navigation.BottomNavigationBar
+import com.jishan.inspiroscope.ui.navigation.MainNavigation
+import com.jishan.inspiroscope.ui.screen.theme.Font
+import com.jishan.inspiroscope.ui.screen.theme.Sound
 import com.jishan.inspiroscope.ui.screen.theme.ThemeScreen
 import com.jishan.inspiroscope.ui.screen.theme.entities.Font
 import com.jishan.inspiroscope.ui.screen.theme.entities.Sound
@@ -99,6 +107,17 @@ class MainActivity : ComponentActivity() {
         }
 
         scheduleDailyQuoteWorker()
+    }
+
+
+    @Composable
+    fun MainApp() {
+        val navController = rememberNavController()
+        Scaffold(bottomBar = {
+            BottomNavigationBar(navController)
+        }) { innerPadding ->
+            MainNavigation(innerPadding, navController)
+        }
     }
 
     private fun scheduleDailyQuoteWorker() {

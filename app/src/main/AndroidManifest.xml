@@ -32,7 +32,7 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
-                android:name="com.jishan.inspiroscope.di.WorkManagerInitializer"
+                android:name="androidx.work.WorkManagerInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
         </provider>
