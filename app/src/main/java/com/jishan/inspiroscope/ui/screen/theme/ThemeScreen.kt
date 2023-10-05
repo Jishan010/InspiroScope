@@ -16,8 +16,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -54,20 +57,20 @@ fun ThemeScreen(
     modifier: Modifier = Modifier
 ) {
     // Remember the selected wallpaper
-    val selectedWallpaper = remember { mutableStateOf(wallpapers.first()) }
+    var selectedWallpaper by rememberSaveable { mutableStateOf(wallpapers.first()) }
 
     // Update the selected wallpaper when the user taps on a wallpaper
     val onWallpaperTapped: (Wallpaper) -> Unit = { wallpaper ->
-        selectedWallpaper.value = wallpaper
+        selectedWallpaper = wallpaper
         onWallpaperSelected(wallpaper)
     }
 
     // Remember the selected font
-    val selectedFont = remember { mutableStateOf(fonts.first()) }
+    var selectedFont by rememberSaveable { mutableStateOf(fonts.first()) }
 
     // Update the selected font when the user taps on a font
     val onFontTapped: (Font) -> Unit = { font ->
-        selectedFont.value = font
+        selectedFont = font
         onFontSelected(font)
     }
 
@@ -83,7 +86,7 @@ fun ThemeScreen(
     // Set the background image to the selected wallpaper
     Box(modifier = Modifier.fillMaxSize()) {
         GlideBlurImage(
-            resourceId = selectedWallpaper.value.imageResId,
+            resourceId = selectedWallpaper.imageResId,
             modifier = Modifier.fillMaxSize(),
             blurRadius = 10 // Change the value of the blur radius
         )
@@ -106,8 +109,8 @@ fun ThemeScreen(
             HorizontalListSection(title = "Wallpapers", items = wallpapers) { wallpaper ->
                 WallPaperCard(
                     wallpaper = wallpaper,
-                    selectedWallpaper = selectedWallpaper.value,
-                    selectedFont = selectedFont.value,
+                    selectedWallpaper = selectedWallpaper,
+                    selectedFont = selectedFont,
                     onWallpaperTapped = onWallpaperTapped
                 )
             }
@@ -117,12 +120,12 @@ fun ThemeScreen(
                     sound = sound,
                     onSoundTapped = onSoundTapped,
                     selectedSound = selectedSound.value,
-                    selectedFont = selectedFont.value
+                    selectedFont = selectedFont
                 )
             }
             // Fonts
             HorizontalListSection(title = "Fonts", items = fonts) { font ->
-                FontsElement(font = font, selectedFont = selectedFont.value, onFontTapped)
+                FontsElement(font = font, selectedFont = selectedFont, onFontTapped)
             }
         }
     }
@@ -165,13 +168,13 @@ fun <T> HorizontalListSection(title: String, items: List<T>, itemContent: @Compo
 @Composable
 fun ThemeScreenPreview() {
     val wallpapers = listOf(
-        Wallpaper("Wallpaper 1", Color.Red, R.drawable.first_wallpaper),
-        Wallpaper("Wallpaper 2", Color.Green, R.drawable.second_wallpaper),
-        Wallpaper("Wallpaper 3", Color.Red, R.drawable.fourth_wallpaper),
-        Wallpaper("Wallpaper 4", Color.Blue, R.drawable.sixth_wallpaper),
-        Wallpaper("Wallpaper 5", Color.Red, R.drawable.seventh_wallpaper),
-        Wallpaper("Wallpaper 6", Color.Green, R.drawable.eighth_wallaper),
-        Wallpaper("Wallpaper 7", Color.Blue, R.drawable.ninth_wallpaper)
+        Wallpaper("Wallpaper 1", R.drawable.first_wallpaper),
+        Wallpaper("Wallpaper 2", R.drawable.second_wallpaper),
+        Wallpaper("Wallpaper 3", R.drawable.fourth_wallpaper),
+        Wallpaper("Wallpaper 4", R.drawable.sixth_wallpaper),
+        Wallpaper("Wallpaper 5", R.drawable.seventh_wallpaper),
+        Wallpaper("Wallpaper 6", R.drawable.eighth_wallaper),
+        Wallpaper("Wallpaper 7", R.drawable.ninth_wallpaper)
     )
 
     val fonts = listOf(
@@ -193,7 +196,8 @@ fun ThemeScreenPreview() {
         Sound("Sound 7", R.drawable.seventh_sound),
     )
 
-    ThemeScreen(wallpapers = wallpapers,
+    ThemeScreen(
+        wallpapers = wallpapers,
         fonts = fonts,
         sounds = sounds,
         onWallpaperSelected = { wallpaper -> },

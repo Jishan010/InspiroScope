@@ -18,6 +18,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.jishan.inspiroscope.ui.screen.home.HomeScreen
+import com.jishan.inspiroscope.ui.screen.theme.ThemeScreen
 import com.jishan.inspiroscope.ui.screen.theme.entities.Font
 import com.jishan.inspiroscope.ui.screen.theme.entities.Sound
 import com.jishan.inspiroscope.ui.screen.theme.entities.Wallpaper
@@ -45,15 +46,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    HomeScreen()
+//                    HomeScreen()
                     val wallpapers = listOf(
-                        Wallpaper("Wallpaper 1", Color.Red, R.drawable.first_wallpaper),
-                        Wallpaper("Wallpaper 2", Color.Green, R.drawable.second_wallpaper),
-                        Wallpaper("Wallpaper 4", Color.Red, R.drawable.fourth_wallpaper),
-                        Wallpaper("Wallpaper 6", Color.Blue, R.drawable.sixth_wallpaper),
-                        Wallpaper("Wallpaper 7", Color.Red, R.drawable.seventh_wallpaper),
-                        Wallpaper("Wallpaper 8", Color.Green, R.drawable.eighth_wallaper),
-                        Wallpaper("Wallpaper 9", Color.Blue, R.drawable.ninth_wallpaper)
+                        Wallpaper("Wallpaper 1", R.drawable.first_wallpaper),
+                        Wallpaper("Wallpaper 2", R.drawable.second_wallpaper),
+                        Wallpaper("Wallpaper 4", R.drawable.fourth_wallpaper),
+                        Wallpaper("Wallpaper 6", R.drawable.sixth_wallpaper),
+                        Wallpaper("Wallpaper 7", R.drawable.seventh_wallpaper),
+                        Wallpaper("Wallpaper 8", R.drawable.eighth_wallaper),
+                        Wallpaper("Wallpaper 9", R.drawable.ninth_wallpaper)
                     )
 
                     val fonts = listOf(
@@ -75,7 +76,7 @@ class MainActivity : ComponentActivity() {
                         Sound("Sound 7", R.drawable.seventh_sound),
                     )
 
-                    /*ThemeScreen(
+                    ThemeScreen(
                         wallpapers = wallpapers,
                         fonts = fonts,
                         sounds = sounds,
@@ -83,7 +84,7 @@ class MainActivity : ComponentActivity() {
                         onFontSelected = { font -> },
                         onSoundSelected = { sound -> },
                         onUpgradeToPremium = { }
-                    )*/
+                    )
                 }
             }
         }

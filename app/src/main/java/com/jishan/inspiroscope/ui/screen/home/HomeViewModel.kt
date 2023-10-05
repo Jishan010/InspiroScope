@@ -50,7 +50,7 @@ class HomeViewModel @Inject constructor(
 
                     nextPageToLoad++
                 } else {
-                    // Handle errors, you can use quoteResult.exceptionOrNull() and wallpaperResult.exceptionOrNull()
+                    //Todo Handle errors, you can use quoteResult.exceptionOrNull() and wallpaperResult.exceptionOrNull()
                 }
                 isLoading = false
             }

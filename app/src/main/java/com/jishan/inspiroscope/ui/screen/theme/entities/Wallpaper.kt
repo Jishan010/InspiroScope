@@ -1,10 +1,12 @@
 package com.jishan.inspiroscope.ui.screen.theme.entities
 
-import androidx.compose.ui.graphics.Color
+import android.os.Parcelable
 import com.jishan.inspiroscope.R
+import kotlinx.android.parcel.Parcelize
 
+// Made this class Parcebale to make it work with rememberSavable
+@Parcelize
 data class Wallpaper(
     val title: String,
-    val color: Color,
     val imageResId: Int = R.drawable.first_wallpaper
-)
+) : Parcelable
