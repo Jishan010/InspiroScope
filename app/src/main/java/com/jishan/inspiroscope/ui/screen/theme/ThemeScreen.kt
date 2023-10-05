@@ -113,7 +113,12 @@ fun ThemeScreen(
             }
             // Sounds
             HorizontalListSection(title = "Sounds", items = sounds) { sound ->
-                SoundElement(sound = sound, onSoundTapped = onSoundTapped, selectedSound = selectedSound.value)
+                SoundElement(
+                    sound = sound,
+                    onSoundTapped = onSoundTapped,
+                    selectedSound = selectedSound.value,
+                    selectedFont = selectedFont.value
+                )
             }
             // Fonts
             HorizontalListSection(title = "Fonts", items = fonts) { font ->
