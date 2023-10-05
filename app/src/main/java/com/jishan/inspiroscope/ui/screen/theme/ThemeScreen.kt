@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jishan.inspiroscope.R
 import com.jishan.inspiroscope.ui.screen.theme.entities.Font
+import com.jishan.inspiroscope.ui.screen.theme.entities.FontSaver
 import com.jishan.inspiroscope.ui.screen.theme.entities.Sound
 import com.jishan.inspiroscope.ui.screen.theme.entities.Wallpaper
 import com.jishan.inspiroscope.ui.screen.theme.widgets.FontsElement
@@ -43,7 +44,7 @@ import com.jishan.inspiroscope.ui.theme.DynaPuff
 import com.jishan.inspiroscope.ui.theme.IndieFlower
 import com.jishan.inspiroscope.ui.theme.MarkScriptRegular
 import com.jishan.inspiroscope.ui.theme.VtThreeThreeThreeRegular
-import com.jishan.inspiroscope.utils.GlideBlurImage
+import com.jishan.inspiroscope.ui.screen.theme.widgets.GlideBlurImage
 
 @Composable
 fun ThemeScreen(
@@ -66,7 +67,7 @@ fun ThemeScreen(
     }
 
     // Remember the selected font
-    var selectedFont by rememberSaveable { mutableStateOf(fonts.first()) }
+    var selectedFont by remember { mutableStateOf(fonts.first()) }
 
     // Update the selected font when the user taps on a font
     val onFontTapped: (Font) -> Unit = { font ->
@@ -83,11 +84,17 @@ fun ThemeScreen(
         onSoundSelected(sound)
     }
 
-    // Set the background image to the selected wallpaper
-    Box(modifier = Modifier.fillMaxSize()) {
+    // Setting the background image to the selected wallpaper
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .fillMaxWidth()
+    ) {
         GlideBlurImage(
             resourceId = selectedWallpaper.imageResId,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .fillMaxWidth(),
             blurRadius = 10 // Change the value of the blur radius
         )
 
@@ -196,8 +203,7 @@ fun ThemeScreenPreview() {
         Sound("Sound 7", R.drawable.seventh_sound),
     )
 
-    ThemeScreen(
-        wallpapers = wallpapers,
+    ThemeScreen(wallpapers = wallpapers,
         fonts = fonts,
         sounds = sounds,
         onWallpaperSelected = { wallpaper -> },

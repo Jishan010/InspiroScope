@@ -15,15 +15,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.jishan.inspiroscope.ui.navigation.BottomNavigationBar
 import com.jishan.inspiroscope.ui.navigation.MainNavigation
-import com.jishan.inspiroscope.ui.screen.theme.Font
-import com.jishan.inspiroscope.ui.screen.theme.Sound
 import com.jishan.inspiroscope.ui.screen.theme.ThemeScreen
 import com.jishan.inspiroscope.ui.screen.theme.entities.Font
 import com.jishan.inspiroscope.ui.screen.theme.entities.Sound
@@ -47,51 +44,7 @@ class MainActivity : ComponentActivity() {
         createNotificationChannel()
         setContent {
             InspiroScopeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-//                    HomeScreen()
-                    val wallpapers = listOf(
-                        Wallpaper("Wallpaper 1", R.drawable.first_wallpaper),
-                        Wallpaper("Wallpaper 2", R.drawable.second_wallpaper),
-                        Wallpaper("Wallpaper 4", R.drawable.fourth_wallpaper),
-                        Wallpaper("Wallpaper 6", R.drawable.sixth_wallpaper),
-                        Wallpaper("Wallpaper 7", R.drawable.seventh_wallpaper),
-                        Wallpaper("Wallpaper 8", R.drawable.eighth_wallaper),
-                        Wallpaper("Wallpaper 9", R.drawable.ninth_wallpaper)
-                    )
-
-                    val fonts = listOf(
-                        Font("Dyna Puff", DynaPuff),
-                        Font("Bree Serif", BreeSerifRegular),
-                        Font("Delicious Handrawn", DeliciousHandrawn),
-                        Font("Indie Flower", IndieFlower),
-                        Font("Mark Script", MarkScriptRegular),
-                        Font("Vt333", VtThreeThreeThreeRegular)
-                    )
-
-                    val sounds = listOf(
-                        Sound("Sound 1", R.drawable.first_sound),
-                        Sound("Sound 2", R.drawable.second_sound),
-                        Sound("Sound 3", R.drawable.third_sound),
-                        Sound("Sound 4", R.drawable.fourth_sound),
-                        Sound("Sound 5", R.drawable.fifth_sound),
-                        Sound("Sound 6", R.drawable.sixth_sound),
-                        Sound("Sound 7", R.drawable.seventh_sound),
-                    )
-
-                    ThemeScreen(
-                        wallpapers = wallpapers,
-                        fonts = fonts,
-                        sounds = sounds,
-                        onWallpaperSelected = { wallpaper -> },
-                        onFontSelected = { font -> },
-                        onSoundSelected = { sound -> },
-                        onUpgradeToPremium = { }
-                    )
-                }
+                MainApp()
             }
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

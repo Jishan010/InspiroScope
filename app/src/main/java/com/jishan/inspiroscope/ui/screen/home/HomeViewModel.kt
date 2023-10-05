@@ -7,6 +7,7 @@ import com.jishan.domain.entitiy.WallpaperEntity
 import com.jishan.domain.usecase.GetRandomQuoteUseCase
 import com.jishan.domain.usecase.GetRandomWallpaperUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +34,7 @@ class HomeViewModel @Inject constructor(
     fun loadNextData(currentPage: Int) {
         if (isLoading) return
         if (currentPage >= nextPageToLoad - 1) {
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 isLoading = true
 
                 // with async - await both of the coroutine or suspend function for fetching news and wallaper will run concurrently and will give the result at once.

@@ -22,7 +22,7 @@ class ImageViewModel : ViewModel() {
     }
 
     fun loadBlurredImage(context: Context, resourceId: Int, blurRadius: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             val requestOptions =
                 RequestOptions().transform(FitCenter(), BlurTransformation(blurRadius))
             val blurredBitmap = Glide.with(context)
