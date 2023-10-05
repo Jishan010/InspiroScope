@@ -13,11 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.jishan.inspiroscope.ui.screen.home.HomeScreen
 import com.jishan.inspiroscope.ui.screen.theme.ThemeScreen
 import com.jishan.inspiroscope.ui.screen.theme.entities.Font
 import com.jishan.inspiroscope.ui.screen.theme.entities.Sound
