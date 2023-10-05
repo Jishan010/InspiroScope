@@ -10,9 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -49,7 +50,8 @@ fun ThemeScreen(
     onWallpaperSelected: (Wallpaper) -> Unit,
     onFontSelected: (Font) -> Unit,
     onSoundSelected: (Sound) -> Unit,
-    onUpgradeToPremium: () -> Unit
+    onUpgradeToPremium: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     // Remember the selected wallpaper
     val selectedWallpaper = remember { mutableStateOf(wallpapers.first()) }
@@ -69,6 +71,15 @@ fun ThemeScreen(
         onFontSelected(font)
     }
 
+    // Remember the selected sound
+    val selectedSound = remember { mutableStateOf(sounds.first()) }
+
+    // Update the selected sound when the user taps on a sound
+    val onSoundTapped: (Sound) -> Unit = { sound ->
+        selectedSound.value = sound
+        onSoundSelected(sound)
+    }
+
     // Set the background image to the selected wallpaper
     Box(modifier = Modifier.fillMaxSize()) {
         GlideBlurImage(
@@ -78,44 +89,35 @@ fun ThemeScreen(
         )
 
         // Add a header with the title "Themes"
-        Column {
+        Column(
+            modifier.verticalScroll(rememberScrollState())
+        ) {
             Text(
                 "Themes",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
+                color = Color.White,
                 modifier = Modifier.padding(top = 16.dp, start = 16.dp)
             )
             Spacer(modifier = Modifier.height(16.dp))
-            LazyColumn {
-                // Upgrade to premium card
-                item {
-                    GoPremiumCard()
-                }
-
-                // Wallpapers
-                item {
-                    HorizontalListSection(title = "Wallpapers", items = wallpapers) { wallpaper ->
-                        WallPaperCard(
-                            wallpaper = wallpaper,
-                            selectedWallpaper = selectedWallpaper.value,
-                            selectedFont = selectedFont.value,
-                            onWallpaperTapped = onWallpaperTapped
-                        )
-                    }
-                }
-
-                // Sounds
-                item {
-                    HorizontalListSection(title = "Sounds", items = sounds) { sound ->
-                        SoundElement(sound)
-                    }
-                }
-                // Fonts
-                item {
-                    HorizontalListSection(title = "Fonts", items = fonts) { font ->
-                        FontsElement(font = font, selectedFont = selectedFont.value,onFontSelected)
-                    }
-                }
+            // Upgrade to premium card
+            GoPremiumCard()
+            // Wallpapers
+            HorizontalListSection(title = "Wallpapers", items = wallpapers) { wallpaper ->
+                WallPaperCard(
+                    wallpaper = wallpaper,
+                    selectedWallpaper = selectedWallpaper.value,
+                    selectedFont = selectedFont.value,
+                    onWallpaperTapped = onWallpaperTapped
+                )
+            }
+            // Sounds
+            HorizontalListSection(title = "Sounds", items = sounds) { sound ->
+                SoundElement(sound = sound, onSoundTapped = onSoundTapped, selectedSound = selectedSound.value)
+            }
+            // Fonts
+            HorizontalListSection(title = "Fonts", items = fonts) { font ->
+                FontsElement(font = font, selectedFont = selectedFont.value, onFontTapped)
             }
         }
     }
@@ -134,6 +136,7 @@ fun <T> HorizontalListSection(title: String, items: List<T>, itemContent: @Compo
             title,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
+            color = Color.White,
             modifier = Modifier.padding(start = 16.dp, top = 16.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -151,9 +154,6 @@ fun <T> HorizontalListSection(title: String, items: List<T>, itemContent: @Compo
         }
     }
 }
-
-// Replace these classes with your actual data models
-
 
 // Usage example
 @Preview(showBackground = true)
@@ -188,13 +188,11 @@ fun ThemeScreenPreview() {
         Sound("Sound 7", R.drawable.seventh_sound),
     )
 
-    ThemeScreen(
-        wallpapers = wallpapers,
+    ThemeScreen(wallpapers = wallpapers,
         fonts = fonts,
         sounds = sounds,
         onWallpaperSelected = { wallpaper -> },
         onFontSelected = { font -> },
         onSoundSelected = { sound -> },
-        onUpgradeToPremium = { }
-    )
+        onUpgradeToPremium = { })
 }

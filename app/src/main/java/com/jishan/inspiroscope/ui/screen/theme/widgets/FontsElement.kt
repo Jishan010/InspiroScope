@@ -31,6 +31,7 @@ fun FontsElement(font: Font,selectedFont:Font , onFontTapped: (Font) -> Unit,mod
     ) {
         Text(
             font.title,
+            color = Color.White,
             modifier = Modifier
                 .padding(horizontal = 8.dp, vertical = 8.dp)
                 .clickable { onFontTapped(font) }, // Invokes onFontTapped when font is clicked

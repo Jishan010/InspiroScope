@@ -14,10 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.size.Size
 import com.jishan.inspiroscope.ui.screen.theme.Border
 import com.jishan.inspiroscope.ui.screen.theme.entities.Font
 import com.jishan.inspiroscope.ui.screen.theme.entities.Wallpaper
@@ -33,8 +37,8 @@ fun WallPaperCard(
     Surface(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
-            .height(350.dp)
-            .width(190.dp)
+            .height(293.dp)
+            .width(159.dp)
             .padding(8.dp),
         elevation = 4.dp
     ) {
@@ -43,13 +47,26 @@ fun WallPaperCard(
                 onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
             }
         ) {
+
+            // Use rememberImagePainter to load and display the image , this helps to reduce the scaling of original high sized image
+            val painter = rememberAsyncImagePainter(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(wallpaper.imageResId)
+                    .size(Size(159, 293)) // Set the target size to load the image at.
+                    .build()
+            )
+
+            if (painter.state is AsyncImagePainter.State.Success) {
+                // This will be executed during the first composition if the image is in the memory cache.
+            }
+
             Image(
-                painter = painterResource(wallpaper.imageResId),
+                painter = painter,
                 contentDescription = "Wallpaper Thumbnail",
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .height(350.dp)
-                    .width(190.dp),
+                    .height(293.dp)
+                    .width(159.dp),
                 contentScale = ContentScale.Crop
             )
             Text(
@@ -64,11 +81,11 @@ fun WallPaperCard(
             if (wallpaper == selectedWallpaper) {
                 Border(
                     modifier = Modifier
-                        .height(350.dp)
-                        .width(190.dp)
+                        .height(293.dp)
+                        .width(159.dp)
                         .align(Alignment.Center),
                     color = Color.White,
-                    width = 2.dp,
+                    width = 1.dp,
                     shape = RoundedCornerShape(12.dp)
                 )
             }

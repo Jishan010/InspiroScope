@@ -66,7 +66,7 @@ fun HomeScreen() {
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val data = homeViewModel.data.collectAsState()
 
-    val pagerState = rememberPagerState()
+   /* val pagerState = rememberPagerState()
 
     VerticalPager(
         pageCount = Int.MAX_VALUE, // Infinite pages
@@ -88,7 +88,7 @@ fun HomeScreen() {
         } else {
             // Show an empty screen or a loading indicator if the data is not available
         }
-    }
+    }*/
 }
 
 @Composable
