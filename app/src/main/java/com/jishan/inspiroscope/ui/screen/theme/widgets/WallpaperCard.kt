@@ -27,7 +27,8 @@ fun WallPaperCard(
     wallpaper: Wallpaper,
     selectedFont: Font,
     selectedWallpaper: Wallpaper,
-    onWallpaperTapped: (Wallpaper) -> Unit
+    onWallpaperTapped: (Wallpaper) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         shape = RoundedCornerShape(12.dp),

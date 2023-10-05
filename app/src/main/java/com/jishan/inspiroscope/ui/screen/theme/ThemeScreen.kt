@@ -1,38 +1,25 @@
 package com.jishan.inspiroscope.ui.screen.theme
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -42,6 +29,9 @@ import com.jishan.inspiroscope.R
 import com.jishan.inspiroscope.ui.screen.theme.entities.Font
 import com.jishan.inspiroscope.ui.screen.theme.entities.Sound
 import com.jishan.inspiroscope.ui.screen.theme.entities.Wallpaper
+import com.jishan.inspiroscope.ui.screen.theme.widgets.FontsElement
+import com.jishan.inspiroscope.ui.screen.theme.widgets.GoPremiumCard
+import com.jishan.inspiroscope.ui.screen.theme.widgets.SoundElement
 import com.jishan.inspiroscope.ui.screen.theme.widgets.WallPaperCard
 import com.jishan.inspiroscope.ui.theme.BreeSerifRegular
 import com.jishan.inspiroscope.ui.theme.DeliciousHandrawn
@@ -99,53 +89,12 @@ fun ThemeScreen(
             LazyColumn {
                 // Upgrade to premium card
                 item {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        elevation = 8.dp,
-                        backgroundColor = Color.LightGray
-                    ) {
-                        Box {
-                            Image(
-                                painter = painterResource(R.drawable.upgrade_to_premium_background),
-                                contentDescription = "Wallpaper Thumbnail",
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .height(80.dp)
-                                    .wrapContentSize(),
-                                contentScale = ContentScale.Crop
-                            )
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(80.dp)
-                                    .padding(16.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.End
-                            ) {
-                                Text(
-                                    text = "Go Premium",
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Spacer(modifier = Modifier.width(10.dp))
-                                Image(
-                                    painter = painterResource(R.drawable.baseline_chevron_right_24),
-                                    contentDescription = "Wallpaper Thumbnail",
-                                    modifier = Modifier
-                                        .wrapContentSize(),
-                                    contentScale = ContentScale.Fit
-                                )
-                            }
-                        }
-                    }
+                    GoPremiumCard()
                 }
 
                 // Wallpapers
                 item {
-                    HorizontalList(title = "Wallpapers", items = wallpapers) { wallpaper ->
+                    HorizontalListSection(title = "Wallpapers", items = wallpapers) { wallpaper ->
                         WallPaperCard(
                             wallpaper = wallpaper,
                             selectedWallpaper = selectedWallpaper.value,
@@ -157,53 +106,16 @@ fun ThemeScreen(
 
                 // Sounds
                 item {
-                    HorizontalList(title = "Sounds", items = sounds) { sound ->
-                        Column(
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            sound.imageResId?.let { painterResource(it) }?.let {
-                                Image(
-                                    painter = it,
-                                    contentDescription = sound.title,
-                                    modifier = Modifier
-                                        .size(60.dp)
-                                        .clip(CircleShape)
-                                )
-                            }
-                            Text(sound.title, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                        }
+                    HorizontalListSection(title = "Sounds", items = sounds) { sound ->
+                        SoundElement(sound)
                     }
                 }
                 // Fonts
                 item {
-                    HorizontalList(title = "Fonts", items = fonts) { font ->
-                        Box(
-                            modifier = Modifier.then(
-                                if (font.fontFamily == selectedFont.value.fontFamily) {
-                                    Modifier
-                                        .wrapContentSize()
-                                        .border(
-                                            width = 2.dp,
-                                            color = Color.White,
-                                            shape = RoundedCornerShape(5.dp)
-                                        )
-                                } else Modifier
-                            )
-                        ) {
-                            Text(
-                                font.title,
-                                modifier = Modifier
-                                    .padding(horizontal = 8.dp, vertical = 8.dp)
-                                    .clickable { onFontTapped(font) }, // Invoke onFontTapped when font is clicked
-                                fontFamily = font.fontFamily,
-                                fontSize = 16.sp
-                            )
-                        }
+                    HorizontalListSection(title = "Fonts", items = fonts) { font ->
+                        FontsElement(font = font, selectedFont = selectedFont.value,onFontSelected)
                     }
                 }
-
-
             }
         }
     }
@@ -216,7 +128,7 @@ fun Border(modifier: Modifier, color: Color, width: Dp, shape: Shape) {
 }
 
 @Composable
-fun <T> HorizontalList(title: String, items: List<T>, itemContent: @Composable (T) -> Unit) {
+fun <T> HorizontalListSection(title: String, items: List<T>, itemContent: @Composable (T) -> Unit) {
     Column {
         Text(
             title,
@@ -243,10 +155,6 @@ fun <T> HorizontalList(title: String, items: List<T>, itemContent: @Composable (
 // Replace these classes with your actual data models
 
 
-
-
-
-
 // Usage example
 @Preview(showBackground = true)
 @Composable
@@ -254,11 +162,11 @@ fun ThemeScreenPreview() {
     val wallpapers = listOf(
         Wallpaper("Wallpaper 1", Color.Red, R.drawable.first_wallpaper),
         Wallpaper("Wallpaper 2", Color.Green, R.drawable.second_wallpaper),
-        Wallpaper("Wallpaper 1", Color.Red, R.drawable.fourth_wallpaper),
-        Wallpaper("Wallpaper 3", Color.Blue, R.drawable.sixth_wallpaper),
-        Wallpaper("Wallpaper 1", Color.Red, R.drawable.seventh_wallpaper),
-        Wallpaper("Wallpaper 2", Color.Green, R.drawable.eighth_wallaper),
-        Wallpaper("Wallpaper 3", Color.Blue, R.drawable.ninth_wallpaper)
+        Wallpaper("Wallpaper 3", Color.Red, R.drawable.fourth_wallpaper),
+        Wallpaper("Wallpaper 4", Color.Blue, R.drawable.sixth_wallpaper),
+        Wallpaper("Wallpaper 5", Color.Red, R.drawable.seventh_wallpaper),
+        Wallpaper("Wallpaper 6", Color.Green, R.drawable.eighth_wallaper),
+        Wallpaper("Wallpaper 7", Color.Blue, R.drawable.ninth_wallpaper)
     )
 
     val fonts = listOf(
@@ -271,9 +179,13 @@ fun ThemeScreenPreview() {
     )
 
     val sounds = listOf(
-        Sound("Sound 1", null),
-        Sound("Sound 2", null),
-        Sound("Sound 3", null)
+        Sound("Sound 1", R.drawable.first_sound),
+        Sound("Sound 2", R.drawable.second_sound),
+        Sound("Sound 3", R.drawable.third_sound),
+        Sound("Sound 4", R.drawable.fourth_sound),
+        Sound("Sound 5", R.drawable.fifth_sound),
+        Sound("Sound 6", R.drawable.sixth_sound),
+        Sound("Sound 7", R.drawable.seventh_sound),
     )
 
     ThemeScreen(

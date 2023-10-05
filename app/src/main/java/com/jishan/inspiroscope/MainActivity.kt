@@ -17,10 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.jishan.inspiroscope.ui.screen.theme.Font
-import com.jishan.inspiroscope.ui.screen.theme.Sound
 import com.jishan.inspiroscope.ui.screen.theme.ThemeScreen
-import com.jishan.inspiroscope.ui.screen.theme.Wallpaper
+import com.jishan.inspiroscope.ui.screen.theme.entities.Font
+import com.jishan.inspiroscope.ui.screen.theme.entities.Sound
+import com.jishan.inspiroscope.ui.screen.theme.entities.Wallpaper
 import com.jishan.inspiroscope.ui.theme.BreeSerifRegular
 import com.jishan.inspiroscope.ui.theme.DeliciousHandrawn
 import com.jishan.inspiroscope.ui.theme.DynaPuff
@@ -66,9 +66,13 @@ class MainActivity : ComponentActivity() {
                     )
 
                     val sounds = listOf(
-                        Sound("Sound 1", null),
-                        Sound("Sound 2", null),
-                        Sound("Sound 3", null)
+                        Sound("Sound 1", R.drawable.first_sound),
+                        Sound("Sound 2", R.drawable.second_sound),
+                        Sound("Sound 3", R.drawable.third_sound),
+                        Sound("Sound 4", R.drawable.fourth_sound),
+                        Sound("Sound 5", R.drawable.fifth_sound),
+                        Sound("Sound 6", R.drawable.sixth_sound),
+                        Sound("Sound 7", R.drawable.seventh_sound),
                     )
 
                     ThemeScreen(
