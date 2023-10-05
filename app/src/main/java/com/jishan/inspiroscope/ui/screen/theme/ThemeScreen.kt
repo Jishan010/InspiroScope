@@ -33,13 +33,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jishan.inspiroscope.R
+import com.jishan.inspiroscope.ui.screen.theme.entities.Font
+import com.jishan.inspiroscope.ui.screen.theme.entities.Sound
+import com.jishan.inspiroscope.ui.screen.theme.entities.Wallpaper
+import com.jishan.inspiroscope.ui.screen.theme.widgets.WallPaperCard
 import com.jishan.inspiroscope.ui.theme.BreeSerifRegular
 import com.jishan.inspiroscope.ui.theme.DeliciousHandrawn
 import com.jishan.inspiroscope.ui.theme.DynaPuff
@@ -143,48 +146,32 @@ fun ThemeScreen(
                 // Wallpapers
                 item {
                     HorizontalList(title = "Wallpapers", items = wallpapers) { wallpaper ->
-                        Card(
-                            modifier = Modifier
-                                .height(350.dp)
-                                .width(190.dp)
-                                .padding(8.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            elevation = 4.dp
+                        WallPaperCard(
+                            wallpaper = wallpaper,
+                            selectedWallpaper = selectedWallpaper.value,
+                            selectedFont = selectedFont.value,
+                            onWallpaperTapped = onWallpaperTapped
+                        )
+                    }
+                }
+
+                // Sounds
+                item {
+                    HorizontalList(title = "Sounds", items = sounds) { sound ->
+                        Column(
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Box(
-                                modifier = Modifier.clickable {
-                                    onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
-                                }
-                            ) {
+                            sound.imageResId?.let { painterResource(it) }?.let {
                                 Image(
-                                    painter = painterResource(wallpaper.imageResId),
-                                    contentDescription = "Wallpaper Thumbnail",
+                                    painter = it,
+                                    contentDescription = sound.title,
                                     modifier = Modifier
-                                        .align(Alignment.Center)
-                                        .height(350.dp)
-                                        .width(190.dp),
-                                    contentScale = ContentScale.FillBounds
+                                        .size(60.dp)
+                                        .clip(CircleShape)
                                 )
-                                Text(
-                                    wallpaper.title,
-                                    modifier = Modifier.align(Alignment.Center),
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    fontFamily = selectedFont.value.fontFamily // Update fontFamily with the selected font
-                                )
-                                // Add a border around the selected wallpaper
-                                if (wallpaper == selectedWallpaper.value) {
-                                    Border(
-                                        modifier = Modifier
-                                            .height(350.dp)
-                                            .width(190.dp)
-                                            .align(Alignment.Center),
-                                        color = Color.White,
-                                        width = 2.dp,
-                                        shape = RoundedCornerShape(12.dp)
-                                    )
-                                }
                             }
+                            Text(sound.title, fontSize = 14.sp, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -216,26 +203,7 @@ fun ThemeScreen(
                     }
                 }
 
-                // Sounds
-                item {
-                    HorizontalList(title = "Sounds", items = sounds) { sound ->
-                        Column(
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            sound.imageResId?.let { painterResource(it) }?.let {
-                                Image(
-                                    painter = it,
-                                    contentDescription = sound.title,
-                                    modifier = Modifier
-                                        .size(60.dp)
-                                        .clip(CircleShape)
-                                )
-                            }
-                            Text(sound.title, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                        }
-                    }
-                }
+
             }
         }
     }
@@ -273,15 +241,11 @@ fun <T> HorizontalList(title: String, items: List<T>, itemContent: @Composable (
 }
 
 // Replace these classes with your actual data models
-data class Wallpaper(
-    val title: String,
-    val color: Color,
-    val imageResId: Int = R.drawable.first_wallpaper
-)
 
-data class Font(val title: String, val fontFamily: FontFamily)
 
-data class Sound(val title: String, val imageResId: Int?)
+
+
+
 
 // Usage example
 @Preview(showBackground = true)
