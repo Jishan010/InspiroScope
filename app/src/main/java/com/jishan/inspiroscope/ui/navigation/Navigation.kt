@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,56 +29,57 @@ import com.jishan.inspiroscope.ui.theme.VtThreeThreeThreeRegular
 
 @Composable
 fun MainNavigation(innerPadding: PaddingValues, navController: NavHostController) {
+
+    var selectedWallpaper by remember { mutableStateOf<Wallpaper?>(null) }
+
     NavHost(
         navController = navController,
         startDestination = Destination.Home.route,
         Modifier.padding(innerPadding)
     ) {
-        composable(Destination.Home.route) { HomeScreen() }
+
+        //local static data for  Theme Screen
+        val wallpapers = listOf(
+            Wallpaper("Wallpaper 1", R.drawable.first_wallpaper),
+            Wallpaper("Wallpaper 2", R.drawable.second_wallpaper),
+            Wallpaper("Wallpaper 4", R.drawable.fourth_wallpaper),
+            Wallpaper("Wallpaper 6", R.drawable.sixth_wallpaper),
+            Wallpaper("Wallpaper 7", R.drawable.seventh_wallpaper),
+            Wallpaper("Wallpaper 8", R.drawable.eighth_wallaper),
+            Wallpaper("Wallpaper 9", R.drawable.ninth_wallpaper)
+        )
+
+        val fonts = listOf(
+            Font("Dyna Puff", DynaPuff),
+            Font("Bree Serif", BreeSerifRegular),
+            Font("Delicious Handrawn", DeliciousHandrawn),
+            Font("Indie Flower", IndieFlower),
+            Font("Mark Script", MarkScriptRegular),
+            Font("Vt333", VtThreeThreeThreeRegular)
+        )
+
+        val sounds = listOf(
+            Sound("Sound 1", R.drawable.first_sound),
+            Sound("Sound 2", R.drawable.second_sound),
+            Sound("Sound 3", R.drawable.third_sound),
+            Sound("Sound 4", R.drawable.fourth_sound),
+            Sound("Sound 5", R.drawable.fifth_sound),
+            Sound("Sound 6", R.drawable.sixth_sound),
+            Sound("Sound 7", R.drawable.seventh_sound),
+        )
+
+        composable(Destination.Home.route) { HomeScreen(selectedWallpaper) }
         composable(Destination.Theme.route) {
             Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colors.background
+                modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
             ) {
-                // HomeScreen()
-                val wallpapers = listOf(
-                    Wallpaper("Wallpaper 1", R.drawable.first_wallpaper),
-                    Wallpaper("Wallpaper 2", R.drawable.second_wallpaper),
-                    Wallpaper("Wallpaper 4", R.drawable.fourth_wallpaper),
-                    Wallpaper("Wallpaper 6", R.drawable.sixth_wallpaper),
-                    Wallpaper("Wallpaper 7", R.drawable.seventh_wallpaper),
-                    Wallpaper("Wallpaper 8", R.drawable.eighth_wallaper),
-                    Wallpaper("Wallpaper 9", R.drawable.ninth_wallpaper)
-                )
-
-                val fonts = listOf(
-                    Font("Dyna Puff", DynaPuff),
-                    Font("Bree Serif", BreeSerifRegular),
-                    Font("Delicious Handrawn", DeliciousHandrawn),
-                    Font("Indie Flower", IndieFlower),
-                    Font("Mark Script", MarkScriptRegular),
-                    Font("Vt333", VtThreeThreeThreeRegular)
-                )
-
-                val sounds = listOf(
-                    Sound("Sound 1", R.drawable.first_sound),
-                    Sound("Sound 2", R.drawable.second_sound),
-                    Sound("Sound 3", R.drawable.third_sound),
-                    Sound("Sound 4", R.drawable.fourth_sound),
-                    Sound("Sound 5", R.drawable.fifth_sound),
-                    Sound("Sound 6", R.drawable.sixth_sound),
-                    Sound("Sound 7", R.drawable.seventh_sound),
-                )
-
-                ThemeScreen(
-                    wallpapers = wallpapers,
+                ThemeScreen(wallpapers = wallpapers,
                     fonts = fonts,
                     sounds = sounds,
-                    onWallpaperSelected = { wallpaper -> },
+                    onWallpaperSelected = { wallpaper -> selectedWallpaper = wallpaper },
                     onFontSelected = { font -> },
                     onSoundSelected = { sound -> },
-                    onUpgradeToPremium = { }
-                )
+                    onUpgradeToPremium = { })
             }
         }
         composable(Destination.Settings.route) { /*Todo Profile Screen content here */ }

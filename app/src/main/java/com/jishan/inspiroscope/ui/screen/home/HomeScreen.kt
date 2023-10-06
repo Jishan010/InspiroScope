@@ -11,10 +11,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.jishan.inspiroscope.ui.screen.home.widgets.QuoteAuthorInfoElement
+import com.jishan.inspiroscope.ui.screen.theme.entities.Wallpaper
 
 // todo featureese below
 /**
@@ -55,29 +58,41 @@ Regenerate response
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(selectedWallpaper: Wallpaper?) {
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val data = homeViewModel.data.collectAsState()
 
     val pagerState = rememberPagerState { Int.MAX_VALUE }
 
-    VerticalPager(
-        state = pagerState, modifier = Modifier.fillMaxSize()
-    ) { page ->
-        LaunchedEffect(key1 = Unit, block = { homeViewModel.loadNextData(page) })
-        val dataItem = data.value.getOrNull(page)
-        if (dataItem != null) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Image(
-                    painter = rememberAsyncImagePainter(dataItem.wallpaper.url),
-                    contentDescription = "Wallpaper",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-                QuoteAuthorInfoElement(dataItem.quote)
+    Box {
+        if (selectedWallpaper != null) {
+            Image(
+                painter = painterResource(selectedWallpaper.imageResId),
+                contentDescription = "Wallpaper",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
+        VerticalPager(
+            state = pagerState, modifier = Modifier.fillMaxSize()
+        ) { page ->
+            LaunchedEffect(key1 = Unit, block = { homeViewModel.loadNextData(page) })
+            val dataItem = data.value.getOrNull(page)
+            if (dataItem != null) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    if (selectedWallpaper == null) {
+                        Image(
+                            painter = rememberAsyncImagePainter(dataItem.wallpaper.url),
+                            contentDescription = "Wallpaper",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    QuoteAuthorInfoElement(dataItem.quote)
+                }
+            } else {
+                // Show an empty screen or a loading indicator if the data is not available
             }
-        } else {
-            // Show an empty screen or a loading indicator if the data is not available
         }
     }
 }
