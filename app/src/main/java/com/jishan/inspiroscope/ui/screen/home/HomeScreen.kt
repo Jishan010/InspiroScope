@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,10 +62,9 @@ fun HomeScreen() {
     val pagerState = rememberPagerState { Int.MAX_VALUE }
 
     VerticalPager(
-        state = pagerState,
-        modifier = Modifier.fillMaxSize()
+        state = pagerState, modifier = Modifier.fillMaxSize()
     ) { page ->
-        homeViewModel.loadNextData(page)
+        LaunchedEffect(key1 = Unit, block = { homeViewModel.loadNextData(page) })
         val dataItem = data.value.getOrNull(page)
         if (dataItem != null) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
