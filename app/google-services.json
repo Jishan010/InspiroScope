@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "375984945410",
+    "project_id": "inspiroscope-53da6",
+    "storage_bucket": "inspiroscope-53da6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375984945410:android:9dd505dc799ed1daebea1b",
+        "android_client_info": {
+          "package_name": "com.jishan.inspiroscope"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfkYQyiLUnTPk3SKL6JSaJ_HBGQ2P2Be0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

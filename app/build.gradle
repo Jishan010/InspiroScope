@@ -6,6 +6,7 @@ plugins {
     id 'kotlin-kapt'
     id 'jacoco'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -127,6 +128,16 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+    // firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    // messaging
+    implementation("com.google.firebase:firebase-messaging-ktx:23.2.1")
+
+    // notification permission
+    implementation("com.google.accompanist:accompanist-permissions:0.31.1-alpha")
 }
 
 // Allow references to generated code

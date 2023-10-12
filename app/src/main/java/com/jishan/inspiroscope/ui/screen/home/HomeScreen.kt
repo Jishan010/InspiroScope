@@ -1,5 +1,7 @@
 package com.jishan.inspiroscope.ui.screen.home
 
+import android.Manifest
+import android.os.Build
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -9,6 +11,8 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -16,6 +20,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
+import com.jishan.inspiroscope.ui.screen.home.widgets.FirebaseMessagingNotificationPermissionDialog
 import com.jishan.inspiroscope.ui.screen.home.widgets.QuoteAuthorInfoElement
 import com.jishan.inspiroscope.ui.screen.theme.entities.Wallpaper
 
@@ -56,9 +66,30 @@ Regenerate response
  *
  */
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreen(selectedWallpaper: Wallpaper?) {
+
+    // code snippet for handling notification permission dialogue - starts here
+    val showNotificationDialog = remember { mutableStateOf(false) }
+
+    // Android 13 Api 33 - runtime notification permission has been added
+    val notificationPermissionState = rememberPermissionState(
+        permission = Manifest.permission.POST_NOTIFICATIONS
+    )
+    if (showNotificationDialog.value) FirebaseMessagingNotificationPermissionDialog(
+        showNotificationDialog = showNotificationDialog,
+        notificationPermissionState = notificationPermissionState
+    )
+
+    LaunchedEffect(key1 = Unit) {
+        if (notificationPermissionState.status.isGranted || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            Firebase.messaging.subscribeToTopic("InspiroScope")
+        } else showNotificationDialog.value = true
+    }
+
+    //ends here
+
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val data = homeViewModel.data.collectAsState()
 

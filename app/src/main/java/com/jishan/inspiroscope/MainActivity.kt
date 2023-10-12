@@ -4,9 +4,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
@@ -15,6 +17,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.jishan.inspiroscope.ui.navigation.BottomNavigationBar
 import com.jishan.inspiroscope.ui.navigation.MainNavigation
 import com.jishan.inspiroscope.ui.theme.InspiroScopeTheme
@@ -27,6 +31,21 @@ import java.util.concurrent.TimeUnit
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // code retrieve the current registration token
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            Log.d("FCM", token.toString())
+            Toast.makeText(baseContext, token.toString(), Toast.LENGTH_SHORT).show()
+        })
+
         createNotificationChannel()
         setContent {
             InspiroScopeTheme {
