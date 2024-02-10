@@ -35,7 +35,7 @@ fun WallPaperCard(
     selectedFont: Font,
     selectedWallpaper: Wallpaper,
     onWallpaperTapped: (Wallpaper) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Surface(
         shape = RoundedCornerShape(12.dp),
@@ -43,17 +43,18 @@ fun WallPaperCard(
             .height(293.dp)
             .width(159.dp)
             .padding(8.dp),
-        elevation = 4.dp
+        elevation = 4.dp,
     ) {
-        Box(modifier = Modifier.clickable {
-            onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
-        }) {
-
+        Box(
+            modifier = Modifier.clickable {
+                onWallpaperTapped(wallpaper) // Invoke onWallpaperTapped when wallpaper is clicked
+            },
+        ) {
             // Use rememberImagePainter to load and display the image , this helps to reduce the scaling of original high sized image
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current).data(wallpaper.imageResId)
                     .size(Size(159, 293)) // Set the target size to load the image at.
-                    .build()
+                    .build(),
             )
 
             if (painter.state is AsyncImagePainter.State.Success) {
@@ -64,7 +65,7 @@ fun WallPaperCard(
                         .align(Alignment.Center)
                         .height(293.dp)
                         .width(159.dp),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
                 )
             }
 
@@ -74,7 +75,7 @@ fun WallPaperCard(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
-                fontFamily = selectedFont.fontFamily // Updated fontFamily with the selected font
+                fontFamily = selectedFont.fontFamily, // Updated fontFamily with the selected font
             )
             // Added a border around the selected wallpaper
             if (wallpaper == selectedWallpaper) {
@@ -85,7 +86,7 @@ fun WallPaperCard(
                         .align(Alignment.Center),
                     color = Color.White,
                     width = 1.dp,
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
                 )
             }
         }
@@ -97,8 +98,10 @@ fun WallPaperCard(
 fun WallpaperCardPreview() {
     val wallpaper = Wallpaper("Wallpaper 1", R.drawable.first_wallpaper)
     val selectedFont = Font("Dyna Puff", DynaPuff)
-    WallPaperCard(wallpaper = wallpaper,
+    WallPaperCard(
+        wallpaper = wallpaper,
         selectedWallpaper = wallpaper,
         selectedFont = selectedFont,
-        onWallpaperTapped = { })
+        onWallpaperTapped = { },
+    )
 }

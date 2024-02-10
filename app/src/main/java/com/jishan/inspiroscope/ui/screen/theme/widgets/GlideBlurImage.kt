@@ -15,7 +15,7 @@ import com.jishan.inspiroscope.ui.screen.theme.ImageViewModel
 fun GlideBlurImage(
     resourceId: Int,
     modifier: Modifier,
-    blurRadius: Int
+    blurRadius: Int,
 ) {
     val context = LocalContext.current
     val imageViewModel = viewModel<ImageViewModel>()
@@ -28,7 +28,7 @@ fun GlideBlurImage(
             painter = BitmapPainter(bitmap.asImageBitmap()),
             contentDescription = "Blurred Background",
             contentScale = ContentScale.FillBounds,
-            modifier = modifier
+            modifier = modifier,
         )
     }
 }

@@ -33,7 +33,7 @@ class FCMService : FirebaseMessagingService() {
         val channelName = "dailyQuote"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
-                NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
+                NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH),
             )
         }
 

@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 class DailyQuoteWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
-    private val getRandomQuoteUseCase: GetRandomQuoteUseCase
+    private val getRandomQuoteUseCase: GetRandomQuoteUseCase,
 ) : CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {

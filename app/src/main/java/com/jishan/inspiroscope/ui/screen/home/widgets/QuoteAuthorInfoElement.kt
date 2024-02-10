@@ -20,19 +20,19 @@ fun QuoteAuthorInfoElement(quoteEntity: QuoteEntity) {
             .background(color = Color.Black.copy(alpha = 0.3f))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = quoteEntity.quote,
             color = Color.White,
             fontSize = 24.sp,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp),
         )
         Text(
             text = "- ${quoteEntity.author}",
             color = Color.White,
             fontSize = 18.sp,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp),
         )
     }
 }

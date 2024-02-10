@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.jishan.inspiroscope.ui.screen.theme.entities.Font
 
 @Composable
-fun FontsElement(font: Font,selectedFont:Font , onFontTapped: (Font) -> Unit,modifier: Modifier = Modifier) {
+fun FontsElement(font: Font, selectedFont: Font, onFontTapped: (Font) -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier.then(
             if (font.fontFamily == selectedFont.fontFamily) {
@@ -24,10 +24,12 @@ fun FontsElement(font: Font,selectedFont:Font , onFontTapped: (Font) -> Unit,mod
                     .border(
                         width = 2.dp,
                         color = Color.White,
-                        shape = RoundedCornerShape(5.dp)
+                        shape = RoundedCornerShape(5.dp),
                     )
-            } else Modifier
-        )
+            } else {
+                Modifier
+            },
+        ),
     ) {
         Text(
             font.title,
@@ -36,7 +38,7 @@ fun FontsElement(font: Font,selectedFont:Font , onFontTapped: (Font) -> Unit,mod
                 .padding(horizontal = 8.dp, vertical = 8.dp)
                 .clickable { onFontTapped(font) }, // Invokes onFontTapped when font is clicked
             fontFamily = font.fontFamily,
-            fontSize = 16.sp
+            fontSize = 16.sp,
         )
     }
 }

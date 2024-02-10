@@ -1,6 +1,5 @@
 package com.jishan.inspiroscope.ui.screen.home.widgets
 
-
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -15,7 +14,7 @@ import com.google.firebase.messaging.ktx.messaging
 @Composable
 fun FirebaseMessagingNotificationPermissionDialog(
     showNotificationDialog: MutableState<Boolean>,
-    notificationPermissionState: PermissionState
+    notificationPermissionState: PermissionState,
 ) {
     if (showNotificationDialog.value) {
         AlertDialog(
@@ -34,7 +33,7 @@ fun FirebaseMessagingNotificationPermissionDialog(
                 }) {
                     Text(text = "OK")
                 }
-            }
+            },
         )
     }
 }

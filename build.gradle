@@ -20,6 +20,7 @@ buildscript {
     dependencies {
         classpath 'org.jacoco:org.jacoco.core:0.8.8'
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:6.19.0"
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
@@ -31,6 +32,7 @@ plugins {
     id 'com.google.dagger.hilt.android' version '2.44' apply false
     id "org.sonarqube" version "3.3" apply false
     id 'com.google.gms.google-services' version '4.4.0' apply false
+    id 'com.diffplug.spotless' version '6.19.0' apply false
 }
 
 apply from: 'sonarqube.gradle'
@@ -42,4 +44,5 @@ task clean(type: Delete) {
 subprojects { subProject ->
     apply from: "$project.rootDir/ktlint.gradle"
     apply from: "$project.rootDir/jacoco.gradle"
+    apply from: "$project.rootDir/spotless.gradle"
 }

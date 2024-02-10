@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -69,18 +68,19 @@ Regenerate response
 @OptIn(ExperimentalFoundationApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreen(selectedWallpaper: Wallpaper?) {
-
     // code snippet for handling notification permission dialogue - starts here
     val showNotificationDialog = remember { mutableStateOf(false) }
 
     // Android 13 Api 33 - runtime notification permission has been added
     val notificationPermissionState = rememberPermissionState(
-        permission = Manifest.permission.POST_NOTIFICATIONS
+        permission = Manifest.permission.POST_NOTIFICATIONS,
     )
-    if (showNotificationDialog.value) FirebaseMessagingNotificationPermissionDialog(
-        showNotificationDialog = showNotificationDialog,
-        notificationPermissionState = notificationPermissionState
-    )
+    if (showNotificationDialog.value) {
+        FirebaseMessagingNotificationPermissionDialog(
+            showNotificationDialog = showNotificationDialog,
+            notificationPermissionState = notificationPermissionState,
+        )
+    }
 
     LaunchedEffect(key1 = Unit) {
         if (notificationPermissionState.status.isGranted || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
@@ -88,7 +88,7 @@ fun HomeScreen(selectedWallpaper: Wallpaper?) {
         } else showNotificationDialog.value = true
     }
 
-    //ends here
+    // ends here
 
     val homeViewModel = hiltViewModel<HomeViewModel>()
     val data = homeViewModel.data.collectAsState()
@@ -101,11 +101,12 @@ fun HomeScreen(selectedWallpaper: Wallpaper?) {
                 painter = painterResource(selectedWallpaper.imageResId),
                 contentDescription = "Wallpaper",
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
         }
         VerticalPager(
-            state = pagerState, modifier = Modifier.fillMaxSize()
+            state = pagerState,
+            modifier = Modifier.fillMaxSize(),
         ) { page ->
             LaunchedEffect(key1 = Unit, block = { homeViewModel.loadNextData(page) })
             val dataItem = data.value.getOrNull(page)
@@ -116,7 +117,7 @@ fun HomeScreen(selectedWallpaper: Wallpaper?) {
                             painter = rememberAsyncImagePainter(dataItem.wallpaper.url),
                             contentDescription = "Wallpaper",
                             modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
+                            contentScale = ContentScale.Crop,
                         )
                     }
                     QuoteAuthorInfoElement(dataItem.quote)
@@ -127,4 +128,3 @@ fun HomeScreen(selectedWallpaper: Wallpaper?) {
         }
     }
 }
-

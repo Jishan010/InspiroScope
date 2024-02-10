@@ -32,19 +32,21 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // code retrieve the current registration token
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+            OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
 
-            // Get new FCM registration token
-            val token = task.result
+                // Get new FCM registration token
+                val token = task.result
 
-            // Log and toast
-            Log.d("FCM", token.toString())
-            Toast.makeText(baseContext, token.toString(), Toast.LENGTH_SHORT).show()
-        })
+                // Log and toast
+                Log.d("FCM", token.toString())
+                Toast.makeText(baseContext, token.toString(), Toast.LENGTH_SHORT).show()
+            },
+        )
 
         createNotificationChannel()
         setContent {
@@ -60,13 +62,14 @@ class MainActivity : ComponentActivity() {
                 controller.hide(WindowInsets.Type.statusBars())
             }
         } else {
-            @Suppress("DEPRECATION") window.decorView.systemUiVisibility =
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility
+                =
                 (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         }
 
         scheduleDailyQuoteWorker()
     }
-
 
     @Composable
     fun MainApp() {

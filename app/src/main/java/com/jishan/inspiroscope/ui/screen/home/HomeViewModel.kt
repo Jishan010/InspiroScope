@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getRandomQuoteUseCase: GetRandomQuoteUseCase,
-    private val getRandomWallpaperUseCase: GetRandomWallpaperUseCase
+    private val getRandomWallpaperUseCase: GetRandomWallpaperUseCase,
 ) : ViewModel() {
 
     private val _data = MutableStateFlow<List<DataItem>>(emptyList())
@@ -51,7 +51,7 @@ class HomeViewModel @Inject constructor(
 
                     nextPageToLoad++
                 } else {
-                    //Todo Handle errors, you can use quoteResult.exceptionOrNull() and wallpaperResult.exceptionOrNull()
+                    // Todo Handle errors, you can use quoteResult.exceptionOrNull() and wallpaperResult.exceptionOrNull()
                 }
                 isLoading = false
             }

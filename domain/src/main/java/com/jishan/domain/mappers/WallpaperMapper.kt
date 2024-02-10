@@ -8,7 +8,7 @@ object WallpaperMapper {
         return WallpaperEntity(
             id = wallpaper.id,
             url = wallpaper.url,
-            photographer = wallpaper.photographer
+            photographer = wallpaper.photographer,
         )
     }
 }

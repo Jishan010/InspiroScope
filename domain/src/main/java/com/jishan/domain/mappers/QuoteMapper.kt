@@ -10,7 +10,7 @@ object QuoteMapper {
             author = quote.author,
             tags = quote.tags,
             category = "", // The response does not include a category, so you can set it to an empty string or remove it from the QuoteEntity
-            id = quote.id.toString()
+            id = quote.id.toString(),
         )
     }
 }

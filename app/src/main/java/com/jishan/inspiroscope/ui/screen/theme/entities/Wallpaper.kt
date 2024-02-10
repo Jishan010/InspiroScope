@@ -8,5 +8,5 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Wallpaper(
     val title: String,
-    val imageResId: Int = R.drawable.first_wallpaper
+    val imageResId: Int = R.drawable.first_wallpaper,
 ) : Parcelable

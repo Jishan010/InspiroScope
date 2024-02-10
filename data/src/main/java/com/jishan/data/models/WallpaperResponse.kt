@@ -12,7 +12,7 @@ data class WallpaperResponse(
     val description: String?,
     val alt_description: String?,
     val urls: Urls,
-    val user: User
+    val user: User,
 )
 
 data class Urls(
@@ -20,23 +20,23 @@ data class Urls(
     val full: String,
     val regular: String,
     val small: String,
-    val thumb: String
+    val thumb: String,
 )
 
 data class User(
     val id: String,
     val username: String,
-    val name: String
+    val name: String,
 )
 
 data class Wallpaper(
     val id: String,
     val url: String,
-    val photographer: String
+    val photographer: String,
 ) {
     constructor(wallpaperResponse: WallpaperResponse) : this(
         id = wallpaperResponse.id,
         url = wallpaperResponse.urls.regular,
-        photographer = wallpaperResponse.user.name
+        photographer = wallpaperResponse.user.name,
     )
 }

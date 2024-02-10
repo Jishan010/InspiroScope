@@ -29,7 +29,6 @@ import com.jishan.inspiroscope.ui.theme.VtThreeThreeThreeRegular
 
 @Composable
 fun MainNavigation(innerPadding: PaddingValues, navController: NavHostController) {
-
     var selectedWallpaper by remember { mutableStateOf<Wallpaper?>(null) }
 
     NavHost(
@@ -37,8 +36,7 @@ fun MainNavigation(innerPadding: PaddingValues, navController: NavHostController
         startDestination = Destination.Home.route,
         Modifier.padding(innerPadding)
     ) {
-
-        //local static data for  Theme Screen
+        // local static data for  Theme Screen
         val wallpapers = listOf(
             Wallpaper("Wallpaper 1", R.drawable.first_wallpaper),
             Wallpaper("Wallpaper 2", R.drawable.second_wallpaper),
@@ -46,7 +44,7 @@ fun MainNavigation(innerPadding: PaddingValues, navController: NavHostController
             Wallpaper("Wallpaper 6", R.drawable.sixth_wallpaper),
             Wallpaper("Wallpaper 7", R.drawable.seventh_wallpaper),
             Wallpaper("Wallpaper 8", R.drawable.eighth_wallaper),
-            Wallpaper("Wallpaper 9", R.drawable.ninth_wallpaper)
+            Wallpaper("Wallpaper 9", R.drawable.ninth_wallpaper),
         )
 
         val fonts = listOf(
@@ -55,7 +53,7 @@ fun MainNavigation(innerPadding: PaddingValues, navController: NavHostController
             Font("Delicious Handrawn", DeliciousHandrawn),
             Font("Indie Flower", IndieFlower),
             Font("Mark Script", MarkScriptRegular),
-            Font("Vt333", VtThreeThreeThreeRegular)
+            Font("Vt333", VtThreeThreeThreeRegular),
         )
 
         val sounds = listOf(
@@ -71,15 +69,18 @@ fun MainNavigation(innerPadding: PaddingValues, navController: NavHostController
         composable(Destination.Home.route) { HomeScreen(selectedWallpaper) }
         composable(Destination.Theme.route) {
             Surface(
-                modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colors.background,
             ) {
-                ThemeScreen(wallpapers = wallpapers,
+                ThemeScreen(
+                    wallpapers = wallpapers,
                     fonts = fonts,
                     sounds = sounds,
                     onWallpaperSelected = { wallpaper -> selectedWallpaper = wallpaper },
                     onFontSelected = { font -> },
                     onSoundSelected = { sound -> },
-                    onUpgradeToPremium = { })
+                    onUpgradeToPremium = { },
+                )
             }
         }
         composable(Destination.Settings.route) { /*Todo Profile Screen content here */ }

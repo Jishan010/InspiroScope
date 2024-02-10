@@ -34,12 +34,11 @@ fun SoundElement(
     modifier: Modifier = Modifier,
     selectedSound: Sound,
     selectedFont: Font,
-    onSoundTapped: (Sound) -> Unit
+    onSoundTapped: (Sound) -> Unit,
 ) {
     val isSelected = sound == selectedSound
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
         val imageModifier = Modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
             .size(80.dp)
@@ -48,19 +47,18 @@ fun SoundElement(
                 onSoundTapped(sound)
             }
 
-
         Box(
             modifier = if (isSelected) {
                 imageModifier.border(1.dp, Color.White, CircleShape)
             } else {
                 imageModifier
-            }
+            },
         ) {
             // Use rememberImagePainter to load and display the image
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current).data(sound.imageResId)
                     .size(Size(150, 150)) // Set the target size to load the image at.
-                    .build()
+                    .build(),
             )
 
             // Display the Image only when it's in the Success state
@@ -70,11 +68,12 @@ fun SoundElement(
                         painter = painter,
                         contentDescription = sound.title,
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
 
-                else -> { /* Display nothing for other states (e.g., Loading) */
+                else -> {
+                    /* Display nothing for other states (e.g., Loading) */
                 }
             }
 
@@ -84,10 +83,9 @@ fun SoundElement(
                     color = Color.White,
                     modifier = Modifier
                         .size(36.dp) // Adjust the size of the CircularProgressIndicator
-                        .align(Alignment.Center)
+                        .align(Alignment.Center),
                 )
             }
-
         }
         Text(
             text = sound.title,
@@ -95,7 +93,7 @@ fun SoundElement(
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = selectedFont.fontFamily,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp),
         )
     }
 }

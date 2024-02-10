@@ -9,7 +9,7 @@ import com.jishan.domain.usecase.GetRandomWallpaperUseCase
 
 class RandomQuoteWallpaperPagingSource(
     private val getRandomQuoteUseCase: GetRandomQuoteUseCase,
-    private val getRandomWallpaperUseCase: GetRandomWallpaperUseCase
+    private val getRandomWallpaperUseCase: GetRandomWallpaperUseCase,
 ) : PagingSource<Int, Pair<QuoteEntity, WallpaperEntity>>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Pair<QuoteEntity, WallpaperEntity>> {
@@ -27,11 +27,11 @@ class RandomQuoteWallpaperPagingSource(
                             LoadResult.Page(
                                 data = data,
                                 prevKey = params.key?.minus(1),
-                                nextKey = params.key?.plus(1)
+                                nextKey = params.key?.plus(1),
                             )
-                        }
+                        },
                     )
-                }
+                },
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

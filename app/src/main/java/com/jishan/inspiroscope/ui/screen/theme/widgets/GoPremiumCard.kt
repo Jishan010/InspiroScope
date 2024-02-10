@@ -32,7 +32,7 @@ fun GoPremiumCard(modifier: Modifier = Modifier) {
             .padding(16.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = 8.dp,
-        backgroundColor = Color.LightGray
+        backgroundColor = Color.LightGray,
     ) {
         Box {
             Image(
@@ -42,7 +42,7 @@ fun GoPremiumCard(modifier: Modifier = Modifier) {
                     .align(Alignment.Center)
                     .height(80.dp)
                     .wrapContentSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
             Row(
                 modifier = Modifier
@@ -50,12 +50,12 @@ fun GoPremiumCard(modifier: Modifier = Modifier) {
                     .height(80.dp)
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.End,
             ) {
                 Text(
                     text = "Go Premium",
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Image(
@@ -63,7 +63,7 @@ fun GoPremiumCard(modifier: Modifier = Modifier) {
                     contentDescription = "Wallpaper Thumbnail",
                     modifier = Modifier
                         .wrapContentSize(),
-                    contentScale = ContentScale.Fit
+                    contentScale = ContentScale.Fit,
                 )
             }
         }

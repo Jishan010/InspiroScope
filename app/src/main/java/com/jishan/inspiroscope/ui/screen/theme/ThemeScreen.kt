@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jishan.inspiroscope.R
 import com.jishan.inspiroscope.ui.screen.theme.entities.Font
-import com.jishan.inspiroscope.ui.screen.theme.entities.FontSaver
 import com.jishan.inspiroscope.ui.screen.theme.entities.Sound
 import com.jishan.inspiroscope.ui.screen.theme.entities.Wallpaper
 import com.jishan.inspiroscope.ui.screen.theme.widgets.FontsElement
+import com.jishan.inspiroscope.ui.screen.theme.widgets.GlideBlurImage
 import com.jishan.inspiroscope.ui.screen.theme.widgets.GoPremiumCard
 import com.jishan.inspiroscope.ui.screen.theme.widgets.SoundElement
 import com.jishan.inspiroscope.ui.screen.theme.widgets.WallPaperCard
@@ -44,7 +44,6 @@ import com.jishan.inspiroscope.ui.theme.DynaPuff
 import com.jishan.inspiroscope.ui.theme.IndieFlower
 import com.jishan.inspiroscope.ui.theme.MarkScriptRegular
 import com.jishan.inspiroscope.ui.theme.VtThreeThreeThreeRegular
-import com.jishan.inspiroscope.ui.screen.theme.widgets.GlideBlurImage
 
 @Composable
 fun ThemeScreen(
@@ -55,7 +54,7 @@ fun ThemeScreen(
     onFontSelected: (Font) -> Unit,
     onSoundSelected: (Sound) -> Unit,
     onUpgradeToPremium: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     // Remember the selected wallpaper
     var selectedWallpaper by rememberSaveable { mutableStateOf(wallpapers.first()) }
@@ -88,26 +87,26 @@ fun ThemeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .fillMaxWidth()
+            .fillMaxWidth(),
     ) {
         GlideBlurImage(
             resourceId = selectedWallpaper.imageResId,
             modifier = Modifier
                 .fillMaxSize()
                 .fillMaxWidth(),
-            blurRadius = 10 // Change the value of the blur radius
+            blurRadius = 10, // Change the value of the blur radius
         )
 
         // Add a header with the title "Themes"
         Column(
-            modifier.verticalScroll(rememberScrollState())
+            modifier.verticalScroll(rememberScrollState()),
         ) {
             Text(
                 "Themes",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
-                modifier = Modifier.padding(top = 16.dp, start = 16.dp)
+                modifier = Modifier.padding(top = 16.dp, start = 16.dp),
             )
             Spacer(modifier = Modifier.height(16.dp))
             // Upgrade to premium card
@@ -118,7 +117,7 @@ fun ThemeScreen(
                     wallpaper = wallpaper,
                     selectedWallpaper = selectedWallpaper,
                     selectedFont = selectedFont,
-                    onWallpaperTapped = onWallpaperTapped
+                    onWallpaperTapped = onWallpaperTapped,
                 )
             }
             // Sounds
@@ -127,7 +126,7 @@ fun ThemeScreen(
                     sound = sound,
                     onSoundTapped = onSoundTapped,
                     selectedSound = selectedSound.value,
-                    selectedFont = selectedFont
+                    selectedFont = selectedFont,
                 )
             }
             // Fonts
@@ -152,14 +151,14 @@ fun <T> HorizontalListSection(title: String, items: List<T>, itemContent: @Compo
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
-            modifier = Modifier.padding(start = 16.dp, top = 16.dp)
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp),
         )
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(horizontal = 8.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             items(items) { item ->
                 Box(modifier = Modifier.padding(horizontal = 8.dp)) {
@@ -181,7 +180,7 @@ fun ThemeScreenPreview() {
         Wallpaper("Wallpaper 4", R.drawable.sixth_wallpaper),
         Wallpaper("Wallpaper 5", R.drawable.seventh_wallpaper),
         Wallpaper("Wallpaper 6", R.drawable.eighth_wallaper),
-        Wallpaper("Wallpaper 7", R.drawable.ninth_wallpaper)
+        Wallpaper("Wallpaper 7", R.drawable.ninth_wallpaper),
     )
 
     val fonts = listOf(
@@ -190,7 +189,7 @@ fun ThemeScreenPreview() {
         Font("Delicious Handrawn", DeliciousHandrawn),
         Font("Indie Flower", IndieFlower),
         Font("Mark Script", MarkScriptRegular),
-        Font("Vt333", VtThreeThreeThreeRegular)
+        Font("Vt333", VtThreeThreeThreeRegular),
     )
 
     val sounds = listOf(
@@ -203,11 +202,13 @@ fun ThemeScreenPreview() {
         Sound("Sound 7", R.drawable.seventh_sound),
     )
 
-    ThemeScreen(wallpapers = wallpapers,
+    ThemeScreen(
+        wallpapers = wallpapers,
         fonts = fonts,
         sounds = sounds,
         onWallpaperSelected = { wallpaper -> },
         onFontSelected = { font -> },
         onSoundSelected = { sound -> },
-        onUpgradeToPremium = { })
+        onUpgradeToPremium = { },
+    )
 }
